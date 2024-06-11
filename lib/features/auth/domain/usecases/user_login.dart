@@ -9,6 +9,6 @@ class UserLogIn extends UseCase<dynamic, Map<String, dynamic>> {
 
   @override
   Future<Either<Failure, dynamic>> call(Map<String, dynamic> params) async {
-    return await authRepository.logIn();
+    return await authRepository.logIn(params);
   }
 }

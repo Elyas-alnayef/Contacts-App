@@ -41,7 +41,7 @@ class ResetPasswordPage extends StatelessWidget {
                       height: 32,
                     ),
                     AuthTextField(
-                        height: 40,
+                        controller: TextEditingController(),
                         hitn: 'Password',
                         isObscureText: true,
                         suffixIcon: Icon(Icons.remove_red_eye)),
@@ -49,14 +49,18 @@ class ResetPasswordPage extends StatelessWidget {
                       height: 24,
                     ),
                     AuthTextField(
-                        height: 40,
+                        controller: TextEditingController(),
                         hitn: 'Password',
                         isObscureText: true,
                         suffixIcon: Icon(Icons.remove_red_eye)),
                     SizedBox(
                       height: 32,
                     ),
-                    SubmitButton(function: () {}, name: "Reset Password"),
+                    SubmitButton(
+                        function: () {
+                          Navigator.of(context).pushReplacementNamed("/login");
+                        },
+                        name: "Reset Password"),
                   ],
                 ),
               )

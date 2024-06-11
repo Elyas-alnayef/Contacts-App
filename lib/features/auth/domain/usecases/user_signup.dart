@@ -10,6 +10,7 @@ class UserSignUp extends UseCase<dynamic, Map<String, dynamic>> {
 
   @override
   Future<Either<Failure, dynamic>> call(Map<String, dynamic> params) async {
-    return await authRepository.signUp();
+    
+    return await authRepository.signUp(params);
   }
 }

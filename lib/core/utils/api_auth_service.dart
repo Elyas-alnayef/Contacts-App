@@ -10,40 +10,35 @@ class ApiService {
       required String email,
       required String password}) async {
     var response = await _dio.post('$baseUrl$endPoint',
-        data: {"email": email, "password": password});
+        data: {"email": email, "password": password},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ));
     await SharedPrefs.saveData(response.data);
     return response.data;
   }
 
-  Future<Map<String, dynamic>> signUp({
+  Future<String> signUp({
     required String endPoint,
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String companyName,
-    required String country,
-    required String city,
-    required String phoneNumber,
-    required String state,
-    required String streetOne,
-    required String vatNumber,
-    required String zip,
+    required Map<String,dynamic>params,
   }) async {
     var response = await _dio.post('$baseUrl$endPoint', data: {
-      "firstName": firstName,
-      "lastName": lastName,
-      "email": email,
-      "password": password,
-      "City": city,
-      "CompanyName": companyName,
-      "Country": country,
-      "PhoneNumber": phoneNumber,
-      "State": state,
-      "StreetOne": streetOne,
-      "VatNumber": vatNumber,
-      "Zip": zip,
+      "firstName":params['firstName'] ,
+      "lastName": params['lastName'],
+      "email": params['email'],
+      "password": params["password"],
+      "city": params['city'],
+      "companyName": params['companyName'],
+      "country": params['country'],
+      "PhoneNumber": '0531464772',
+      "state": params['state'],
+      "streetOne": params['streetOne'],
+      "vatNumber": params['vatNumber'],
+      "zip": params['zip'],
     });
-    return response.data;
+
+    return response.toString();
   }
 }

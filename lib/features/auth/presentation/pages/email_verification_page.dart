@@ -31,6 +31,7 @@ class EmailVerificationPage extends StatelessWidget {
                 child: Column(
                   children: [
                     AuthTextField(
+                        controller: TextEditingController(),
                         height: 52,
                         hitn: 'Enter your Email address',
                         isObscureText: true,
@@ -38,13 +39,19 @@ class EmailVerificationPage extends StatelessWidget {
                     SizedBox(
                       height: 32,
                     ),
-                    SubmitButton(function: () {}, name: "Send"),
+                    SubmitButton(
+                        function: () {
+                          Navigator.of(context).pushNamed("/resetpassword");
+                        },
+                        name: "Send"),
                     SizedBox(
                       height: 32,
                     ),
                     Center(
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           child: Text('Back to Login',
                               style: TextStyle(
                                   fontSize: 14,

@@ -1,16 +1,27 @@
+import 'package:contacts_app/core/utils/shared_perferances_service.dart';
+import 'package:contacts_app/features/auth/domain/usecases/user_login.dart';
+import 'package:contacts_app/features/auth/domain/usecases/user_signup.dart';
+import 'package:contacts_app/features/auth/presentation/cubits/login/login_cubit.dart';
+import 'package:contacts_app/features/auth/presentation/cubits/signup/signup_cubit.dart';
 import 'package:contacts_app/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:contacts_app/features/auth/presentation/pages/login_page.dart';
 import 'package:contacts_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:contacts_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:contacts_app/features/auth/data/repositories/auth_repository_imp.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
+import '../../../../core/utils/api_auth_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'features/auth/domain/entities/user_entity.dart';
+import 'features/auth/data/datasources/auth_local_data_source.dart';
+import 'features/auth/data/datasources/auth_remote_data_source.dart';
 
 void main() async {
-  Hive.initFlutter();
-  Hive.registerAdapter(UserEntityAdapter());
-  await Hive.openBox('AuthenticatedUser');
+  // await Hive.initFlutter();
+  // Hive.registerAdapter(UserEntityAdapter());
+  // await Hive.openBox('AuthenticatedUser');
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefs.init();
   runApp(const MyApp());
 }
 
@@ -20,35 +31,85 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {'/signup': (context) => SignUpPage()},
-      title: 'Contact Book',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginCubit>(
+          create: (context) => LoginCubit(UserLogIn(
+              authRepository: AuthRepositoryImpl(
+                  authRemoteDataSource:
+                      AuthRemoteDataSourceImp(apiService: ApiService(Dio())),
+                  authLocalDataSource: AuthLocalDataSourceImp()))),
+        ),
+        BlocProvider<SignupCubit>(
+            create: (context) => SignupCubit(UserSignUp(
+                authRepository: AuthRepositoryImpl(
+                    authLocalDataSource: AuthLocalDataSourceImp(),
+                    authRemoteDataSource: AuthRemoteDataSourceImp(
+                        apiService: ApiService(Dio()))))))
+      ],
+      child: MaterialApp(
+        routes: {
+          '/signup': (context) => SignUpPage(),
+          '/login': (context) => LogInPage(),
+          '/emailVerification': (context) => EmailVerificationPage(),
+          '/resetpassword': (context) => ResetPasswordPage(),
+        },
+        title: 'Contact Book',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: LogInPage(),
       ),
-      home: ResetPasswordPage(),
     );
   }
 }
 
+
+
+
+
+
+
+
+//  ApiService apiService = ApiService(new Dio());
+//   try {
+//     var data = await apiService.signUp(
+//         companyName: "123",
+//         city: "Azaz",
+//         country: "Syria",
+//         phoneNumber: "0531467889",
+//         state: 'ff',
+//         streetOne: "Q1-R3",
+//         vatNumber: '12456789',
+//         zip: '00000',
+//         firstName: "saad",
+//         lastName: "saad",
+//         endPoint: "register",
+//         email: "saad@gmail.com",
+//         password: "123456789ASD");
+//     print("--------------");
+//     print(data);
+//   } catch (e) {
+//     if (e is DioException) {
+//       print(e);
+//     }
+//   }
+
+
+
+
 // await SharedPrefs.init();
-// ApiService apiService = ApiService(new Dio());
-// var data = await apiService.signUp(
-//     companyName: "SAPPRO",
-//     city: "Azaz",
-//     country: "Syria",
-//     phoneNumber: "0531467889",
-//     state: 'ff',
-//     streetOne: "Q1-R3",
-//     vatNumber: '12456789',
-//     zip: '00000',
-//     firstName: "Naser",
-//     lastName: "naser",
-//     endPoint: "register",
-//     email: "Naser@gmail.com",
-//     password: "123456789ASD");
-// print(data);
-// var x = await SharedPrefs.getData("token");
-// print(x);
+//   ApiService apiService = ApiService(Dio());
+//   try {
+//     var data = await apiService.logIn(
+//         endPoint: "login", email: "saad@gmail.com", password: "123456789ASD");
+//     print(data);
+//   } catch (e) {
+//     if (e is DioException) {
+//       print(e);
+//     }
+//   }
+//     var x = await SharedPrefs.getData("token");
+//     print(x);

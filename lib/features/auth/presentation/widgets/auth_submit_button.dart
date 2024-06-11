@@ -9,7 +9,9 @@ Widget SubmitButton({required String name, required Function function}) =>
       height: 48,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: function(),
+        onPressed: () {
+          function();
+        },
         child: Text(
           "$name",
           style: TextStyle(color: Colors.white),

@@ -1,10 +1,13 @@
+import 'package:contacts_app/features/auth/presentation/cubits/signup/signup_cubit.dart';
 import 'package:contacts_app/features/auth/presentation/widgets/auth_navigate_button.dart';
 import 'package:contacts_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:contacts_app/features/auth/presentation/widgets/auth_title.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/auth_countries_dropDownList.dart';
 import '../widgets/auth_textfield.dart';
+import '../widgets/spacer_height.dart';
+import '../widgets/toast.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -14,6 +17,34 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController emialController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController companyNameController = TextEditingController();
+  TextEditingController vatController = TextEditingController();
+  TextEditingController streetController = TextEditingController();
+  TextEditingController street2Controller = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController zipController = TextEditingController();
+  String countryName = '';
+  @override
+  void dispose() {
+    emialController.dispose();
+    passwordController.dispose();
+    lastnameController.dispose();
+    firstnameController.dispose();
+    companyNameController.dispose();
+    vatController.dispose();
+    streetController.dispose();
+    street2Controller.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    zipController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,6 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         children: [
                           Expanded(
                             child: AuthTextField(
+                                controller: firstnameController,
                                 height: 52,
                                 hitn: 'First Name',
                                 isObscureText: false),
@@ -58,57 +90,62 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                           Expanded(
                               child: AuthTextField(
+                                  controller: lastnameController,
                                   height: 52,
                                   hitn: 'Last Name',
                                   isObscureText: false))
                         ],
                       ),
-                      SizedBox(
-                        height: 32,
-                      ),
+                      height_32(),
                       AuthTextField(
-                          height: 52, hitn: 'Email', isObscureText: false),
-                      SizedBox(
-                        height: 32,
-                      ),
+                          controller: emialController,
+                          height: 52,
+                          hitn: 'Email',
+                          isObscureText: false),
+                      height_32(),
                       AuthTextField(
+                          controller: passwordController,
                           height: 52,
                           hitn: 'Password',
                           isObscureText: true,
                           suffixIcon: Icon(Icons.remove_red_eye)),
                       SectionTitle(title: "Billing Details"),
-                      AuthTextField(height: 52, hitn: 'Company Name'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'VAT Numer'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'Street'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'Street 2'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'City'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'State'),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      AuthTextField(height: 52, hitn: 'Zip'),
-                      SizedBox(
-                        height: 32,
-                      ),
+                      AuthTextField(
+                          controller: companyNameController,
+                          height: 52,
+                          hitn: 'Company Name'),
+                      height_32(),
+                      AuthTextField(
+                          controller: vatController,
+                          height: 52,
+                          hitn: 'VAT Numer'),
+                      height_32(),
+                      AuthTextField(
+                          controller: streetController,
+                          height: 52,
+                          hitn: 'Street'),
+                      height_32(),
+                      AuthTextField(
+                          controller: street2Controller,
+                          height: 52,
+                          hitn: 'Street 2'),
+                      height_32(),
+                      AuthTextField(
+                          controller: cityController, height: 52, hitn: 'City'),
+                      height_32(),
+                      AuthTextField(
+                          controller: stateController,
+                          height: 52,
+                          hitn: 'State'),
+                      height_32(),
+                      AuthTextField(
+                          controller: zipController, height: 52, hitn: 'Zip'),
+                      height_32(),
                       DropDownCountriesList(
                           hint: "Select Your Country",
                           function: (value) {
-                            return value;
+                            countryName = value.toString();
+                            return countryName;
                           },
                           items: [
                             DropdownMenuItem(
@@ -143,7 +180,46 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(
                   height: 24,
                 ),
-                SubmitButton(name: 'Register', function: () {}),
+                BlocConsumer<SignupCubit, SignupState>(
+
+                  listener: (context, state) {
+                    if (state is RegisteFaild) {
+                      return buildToast(state.message, Colors.red[200]!);
+                    } else if (state is RegisterSuccess) {
+                      return buildToast(state.message, Colors.green[400]!);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is RegisterLoading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+
+                      return SubmitButton(
+                          name: 'Register',
+                          function: () {
+                            try {
+                              context.read<SignupCubit>().signUp({
+                                'companyName': companyNameController.text,
+                                'city': cityController.text,
+                                'country': countryName,
+                                'state': stateController.text,
+                                'streetOne': streetController.text,
+                                'vatNumber': vatController.text,
+                                'zip': zipController.text,
+                                'phoneNumber': "0531467889",
+                                'firstName': firstnameController.text,
+                                'lastName': lastnameController.text,
+                                'email': emialController.text,
+                                'password': passwordController.text
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+                          });
+                    }
+
+                  },
+                ),
                 SizedBox(
                   height: 24,
                 ),
