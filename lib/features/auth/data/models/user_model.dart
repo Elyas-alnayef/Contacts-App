@@ -24,7 +24,7 @@ class UserModel extends UserEntity {
   int? accessFailedCount;
 
   UserModel({
-    required this.firstName ,
+    required this.firstName,
     required this.lastName,
     this.status,
     required this.role,
@@ -52,7 +52,7 @@ class UserModel extends UserEntity {
             phoneNumber: phoneNumber,
             role: role);
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        firstName: json['firstName'] as String,
+        firstName: json['firstName'] as String ,
         lastName: json['lastName'] as String,
         status: json['status'] as String?,
         role: json['role'] as String,

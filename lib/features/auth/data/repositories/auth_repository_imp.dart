@@ -20,10 +20,10 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> logIn(
-      Map<String, dynamic> params) async {
+      LogInUseCaseParameters params) async {
     try {
       var data =
-          await authRemoteDataSource.logIn(params['email'], params['password']);
+          await authRemoteDataSource.logIn(params.email, params.password);
       return right(data);
     } catch (e) {
       if (e is DioException) {
@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> signUp(Map<String, dynamic> params) async {
+  Future<Either<Failure, String>> signUp(SignUpUseCaseParameters params) async {
     try {
       var data = await authRemoteDataSource.signUp(params);
       return right(data);

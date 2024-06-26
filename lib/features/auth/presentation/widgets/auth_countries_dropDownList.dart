@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-Widget DropDownCountriesList({
-  required String hint,
-  required List<DropdownMenuItem> items,
-  required Function(String) function,
-}) =>
-    Container(
+class DropDownCountriesList extends StatelessWidget {
+  final String hint;
+  final List<DropdownMenuItem> items;
+  final Function(String) function;
+  const DropDownCountriesList(
+      {super.key,
+      required this.hint,
+      required this.function,
+      required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       padding: EdgeInsets.only(left: 16),
       height: 52,
       decoration: BoxDecoration(
@@ -14,6 +21,7 @@ Widget DropDownCountriesList({
         color: Color(0xFFF7F7F7),
       ),
       child: DropdownButton(
+        underline: SizedBox(),
         isExpanded: true,
         hint: Text("$hint"),
         items: items,
@@ -23,3 +31,5 @@ Widget DropDownCountriesList({
         value: null,
       ),
     );
+  }
+}

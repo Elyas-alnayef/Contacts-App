@@ -2,20 +2,25 @@ import 'package:flutter/material.dart';
 
 class AuthTextField extends StatefulWidget {
   final String hitn;
-  final TextEditingController controller;
-
   final bool isObscureText;
   final Widget? suffixIcon;
   final double height;
   final double sizedBoxHeight;
-  const AuthTextField(
-      {super.key,
-      required this.hitn,
-      required this.controller,
-      this.isObscureText = false,
-      this.suffixIcon = null,
-      this.height = 56,
-      this.sizedBoxHeight = 8});
+  final TextEditingController controller;
+  final void Function() func;
+  final String? Function(String value) validate;
+
+  const AuthTextField({
+    super.key,
+    required this.hitn,
+    this.isObscureText = false,
+    this.suffixIcon = null,
+    this.height = 56,
+    this.sizedBoxHeight = 8,
+    required this.func,
+    required this.validate,
+    required this.controller,
+  });
 
   @override
   State<AuthTextField> createState() => _AuthTextFieldState();
@@ -54,6 +59,13 @@ class _AuthTextFieldState extends State<AuthTextField> {
           height: widget.height,
           alignment: Alignment.bottomCenter,
           child: TextFormField(
+            controller: widget.controller,
+            validator: (value) {
+              return widget.validate(value!);
+            },
+            onTapOutside: (newValue) {
+              widget.func();
+            },
             focusNode: _focusNode,
             onTap: () {
               setState(() {
@@ -61,7 +73,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
                 dividerColor = Color(0xFF4E73DF);
               });
             },
-            controller: widget.controller,
             obscureText: widget.isObscureText,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -88,106 +99,3 @@ class _AuthTextFieldState extends State<AuthTextField> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-// Widget AuthTextField({
-//   required String hitn,
-//   bool isObscureText = false,
-//   Icon? suffixIcon,
-//   double height = 56,
-//   double sizedBoxHeight = 8,
-// }) =>
-//     Column(
-//       children: [
-//         Container(
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.only(
-//                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)),
-//             color: Color(0xFFF7F7F7),
-//           ),
-//           height: height,
-//           alignment: Alignment.bottomCenter,
-//           child: TextFormField(
-//             onTap: () {
-//               sizedBoxHeight = 0;
-//             },
-//             onEditingComplete: () {
-//               sizedBoxHeight = 8;
-//             },
-//             obscureText: isObscureText,
-//             decoration: InputDecoration(
-//               border: InputBorder.none,
-//               contentPadding: EdgeInsets.symmetric(horizontal: 16),
-//               filled: true,
-//               fillColor: Color(0xFFF7F7F7),
-//               labelText: hitn,
-//               floatingLabelStyle: TextStyle(fontSize: 14),
-//               hintStyle: TextStyle(color: Color(0xFF868686)),
-//               suffixIcon: isObscureText ? suffixIcon : null,
-//               suffixIconColor: Color(0xFF868686),
-//             ),
-//           ),
-//         ),
-//         SizedBox(
-//           height: sizedBoxHeight,
-//         ),
-//         Divider(
-//           height: 0,
-//           color: Colors.black,
-//           thickness: 1,
-//         )
-//       ],
-//     );
-
-// enabledBorder: OutlineInputBorder(
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(4.0),
-//                   topRight: Radius.circular(4.0),
-//                 ),
-//                 borderSide: BorderSide(
-//                   color: Colors.transparent,
-//                 ),
-//               ),
-//               focusedBorder: OutlineInputBorder(
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(4.0),
-//                   topRight: Radius.circular(4.0),
-//                 ),
-//                 borderSide: BorderSide(
-//                   color: Colors.transparent,
-//                 ),
-//               ),
-//               errorBorder: OutlineInputBorder(
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(20.0),
-//                   topRight: Radius.circular(20.0),
-//                 ),
-//                 borderSide: BorderSide(
-//                   color: Colors.transparent,
-//                 ),
-//               ),
-//               focusedErrorBorder: OutlineInputBorder(
-//                 borderRadius: BorderRadius.only(
-//                   topLeft: Radius.circular(4.0),
-//                   topRight: Radius.circular(4.0),
-//                 ),
-//                 borderSide: BorderSide(
-//                   color: Colors.transparent,
-//                 ),
-//               ),
-
-//  Container(
-//           decoration: BoxDecoration(
-//             borderRadius: BorderRadius.only(
-//                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)),
-//             color: Color(0xFFF7F7F7),
-//           ),
-//           height: 56,
-//           alignment: Alignment.bottomCenter,)

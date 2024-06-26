@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+class SubmitButton extends StatelessWidget {
+  final String name ;
+  final Function function ;
+  const SubmitButton({super.key,required this.name,required this.function});
 
-Widget SubmitButton({required String name, required Function function}) =>
-    Container(
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Color(0xFF4E73DF),
@@ -24,3 +29,6 @@ Widget SubmitButton({required String name, required Function function}) =>
             backgroundColor: Color(0xFF4E73DF)),
       ),
     );
+  }
+}
+  

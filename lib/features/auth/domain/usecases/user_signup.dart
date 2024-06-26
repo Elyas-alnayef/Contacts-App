@@ -4,12 +4,12 @@ import 'package:dartz/dartz.dart';
 
 import '../repositories/auth_repository.dart';
 
-class UserSignUp extends UseCase<dynamic, Map<String, dynamic>> {
+class UserSignUp extends UseCase<dynamic, SignUpUseCaseParameters> {
   final AuthRepository authRepository;
   UserSignUp({required this.authRepository});
 
   @override
-  Future<Either<Failure, dynamic>> call(Map<String, dynamic> params) async {
+  Future<Either<Failure, dynamic>> call(SignUpUseCaseParameters params) async {
     
     return await authRepository.signUp(params);
   }

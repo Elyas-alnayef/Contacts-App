@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget SectionTitle({
-  required String title,
-}) =>
-    Padding(
+class SectionTitle extends StatelessWidget {
+  final String title;
+  const SectionTitle({super.key,required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 16),
       child: Container(
         alignment: Alignment.bottomLeft,
@@ -18,3 +21,5 @@ Widget SectionTitle({
         ),
       ),
     );
+  }
+}

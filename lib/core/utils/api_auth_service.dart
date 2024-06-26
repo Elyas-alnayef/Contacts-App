@@ -1,6 +1,8 @@
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:dio/dio.dart';
 
+import '../../features/auth/domain/repositories/auth_repository.dart';
+
 class ApiService {
   final Dio _dio;
   final baseUrl = "https://ms.itmd-b1.com:5123/api/";
@@ -22,21 +24,21 @@ class ApiService {
 
   Future<String> signUp({
     required String endPoint,
-    required Map<String,dynamic>params,
+    required SignUpUseCaseParameters params,
   }) async {
     var response = await _dio.post('$baseUrl$endPoint', data: {
-      "firstName":params['firstName'] ,
-      "lastName": params['lastName'],
-      "email": params['email'],
-      "password": params["password"],
-      "city": params['city'],
-      "companyName": params['companyName'],
-      "country": params['country'],
+      "firstName": params.firstname,
+      "lastName": params.lastname,
+      "email": params.email,
+      "password": params.password,
+      "city": params.cityName,
+      "companyName": params.companyName,
+      "country": params.countryName,
       "PhoneNumber": '0531464772',
-      "state": params['state'],
-      "streetOne": params['streetOne'],
-      "vatNumber": params['vatNumber'],
-      "zip": params['zip'],
+      "state": params.satte,
+      "streetOne": params.street1,
+      "vatNumber": params.vat,
+      "zip": params.zip,
     });
 
     return response.toString();

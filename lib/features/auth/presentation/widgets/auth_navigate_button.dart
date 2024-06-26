@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
-Widget NavigateButton(
-        {double width = 143,
-        required String name,
-        required Function function}) =>
-    Container(
+class NavigateButton extends StatelessWidget {
+  final String name;
+  final Function function;
+  final double width ;
+  const NavigateButton({
+    super.key,
+    required this.name,
+    required this.function,
+    this.width = 143
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4), color: Colors.transparent),
       height: 48,
@@ -27,3 +36,5 @@ Widget NavigateButton(
         ),
       ),
     );
+  }
+}

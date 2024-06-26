@@ -1,10 +1,11 @@
 import 'package:contacts_app/core/utils/api_auth_service.dart';
 
 import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> logIn(String emial, String password);
-  Future<String> signUp(Map<String, dynamic> params);
+  Future<String> signUp(SignUpUseCaseParameters params);
   Future<String> resetPassword();
   Future<UserEntity> fetchCurrentAuthenticatedUser();
 }
@@ -34,7 +35,7 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
   }
 
   @override
-  Future<String> signUp(Map<String, dynamic> params) async {
+  Future<String> signUp(SignUpUseCaseParameters params) async {
     var data = await apiService.signUp(
       endPoint: "register",
       params: params,

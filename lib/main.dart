@@ -1,17 +1,15 @@
+import 'package:contacts_app/core/constant/app_routes.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_login.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_signup.dart';
 import 'package:contacts_app/features/auth/presentation/cubits/login/login_cubit.dart';
 import 'package:contacts_app/features/auth/presentation/cubits/signup/signup_cubit.dart';
-import 'package:contacts_app/features/auth/presentation/pages/email_verification_page.dart';
 import 'package:contacts_app/features/auth/presentation/pages/login_page.dart';
-import 'package:contacts_app/features/auth/presentation/pages/reset_password_page.dart';
-import 'package:contacts_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:contacts_app/features/auth/data/repositories/auth_repository_imp.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/utils/api_auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/api_auth_service.dart';
 
 import 'features/auth/data/datasources/auth_local_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
@@ -34,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginCubit>(
-          create: (context) => LoginCubit(UserLogIn(
+          create: (context) => LoginCubit(UserLogInUseCase(
               authRepository: AuthRepositoryImpl(
                   authRemoteDataSource:
                       AuthRemoteDataSourceImp(apiService: ApiService(Dio())),
@@ -48,12 +46,7 @@ class MyApp extends StatelessWidget {
                         apiService: ApiService(Dio()))))))
       ],
       child: MaterialApp(
-        routes: {
-          '/signup': (context) => SignUpPage(),
-          '/login': (context) => LogInPage(),
-          '/emailVerification': (context) => EmailVerificationPage(),
-          '/resetpassword': (context) => ResetPasswordPage(),
-        },
+        routes: routes,
         title: 'Contact Book',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
