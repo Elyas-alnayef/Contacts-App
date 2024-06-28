@@ -10,12 +10,18 @@ class AppStrings {
   static const String street1 = 'Street1';
   static const String street2 = 'Street2';
   static const String city = 'City';
+  static const String zip = 'Zip';
   static const String state = 'State';
   static const String donthaveaccount = "Don't have account ?";
   static const String signUp = "Sign up";
   static const String register = "Register";
-
-  static const String fordetpassword = "forget your password ?";
+  static const String home = "Home";
+  static const String contacts = "Contacts";
+  static const String user = "User";
+  static const String companyProfile = "Company Profile";
+  static const String userName = "UserName";
+  static const String forgetpassword = "forget your password ?";
+  static const String myprofile = "My Profile";
 }
 
 class HelpersMessages {

@@ -49,7 +49,7 @@ Widget logoSection() {
 }
 
 //form section
-Widget formSection(BuildContext  context) {
+Widget formSection(BuildContext context) {
   return Form(
     key: BlocProvider.of<LoginCubit>(context).formKey,
     child: Column(
@@ -104,7 +104,7 @@ Widget formSection(BuildContext  context) {
               BlocProvider.of<LoginCubit>(context)
                   .navigateToResetPasswordPage(context);
             },
-            child: const Text(AppStrings.fordetpassword,
+            child: const Text(AppStrings.forgetpassword,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 10, color: Colors.blue)),
           ),
@@ -130,11 +130,11 @@ Widget formSection(BuildContext  context) {
                         .formKey
                         .currentState!
                         .validate()) {
-                          if (state is TextFieldChangedCompleteState) {
-                            context
-                                .read<LoginCubit>()
-                                .LogIn(state.email!, state.password!);
-                          }
+                      if (state is TextFieldChangedCompleteState) {
+                        context
+                            .read<LoginCubit>()
+                            .LogIn(state.email!, state.password!);
+                      }
                     }
                   },
                   name: AppStrings.signIn);

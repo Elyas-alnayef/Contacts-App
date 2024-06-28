@@ -3,12 +3,12 @@ import 'package:dartz/dartz.dart';
 
 abstract class CompanyRepository {
   Future<Either<Failure, String>> createNewCompany(
-      CreateNewCompanyUseCaseParameters params);
+      EditCompanyUseCaseParameters params);
   Future<Either<Failure, Map<String, dynamic>>> getCompany(
       GetCompanyInformationUseCaseParameters params);
 }
 
-class CreateNewCompanyUseCaseParameters {
+class EditCompanyUseCaseParameters {
   final String companyName;
   final String vatNumber;
   final String streetOne;
@@ -17,7 +17,7 @@ class CreateNewCompanyUseCaseParameters {
   final String state;
   final String zip;
   final String country;
-  CreateNewCompanyUseCaseParameters(
+  EditCompanyUseCaseParameters(
       {required this.companyName,
       required this.vatNumber,
       required this.streetOne,
@@ -32,5 +32,6 @@ class GetCompanyInformationUseCaseParameters {
   final String usertoken;
   final String companyId;
 
-  GetCompanyInformationUseCaseParameters({required this.usertoken,required  this.companyId});
+  GetCompanyInformationUseCaseParameters(
+      {required this.usertoken, required this.companyId});
 }

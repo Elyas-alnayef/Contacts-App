@@ -4,15 +4,15 @@ import 'package:dartz/dartz.dart';
 
 import '../repositories/company_repository.dart';
 
-class GetCompanyInformationUseCase extends UseCase<dynamic,CreateNewCompanyUseCaseParameters> {
+class GetCompanyInformationUseCase
+    extends UseCase<dynamic, EditCompanyUseCaseParameters> {
   final CompanyRepository companyRepository;
 
   GetCompanyInformationUseCase({required this.companyRepository});
-  
+
   @override
-  Future<Either<Failure, dynamic>> call(CreateNewCompanyUseCaseParameters params) {
+  Future<Either<Failure, dynamic>> call(EditCompanyUseCaseParameters params) {
     // TODO: implement call
     throw UnimplementedError();
   }
-  
 }

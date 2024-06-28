@@ -27,7 +27,7 @@ class SignUpPage extends StatelessWidget {
               children: [
                 titleSection(),
                 fromSction(context),
-               const Height_29(),
+                const Height_29(),
                 Row(
                   children: [
                     Checkbox(value: true, onChanged: (value) {}),
@@ -283,7 +283,7 @@ Widget fromSction(BuildContext context) {
               },
               controller: BlocProvider.of<SignupCubit>(context).zipController,
               height: 52,
-              hitn: 'Zip'),
+              hitn: AppStrings.zip),
           const Height_32(),
           DropDownCountriesList(
               hint: "Select Your Country",
