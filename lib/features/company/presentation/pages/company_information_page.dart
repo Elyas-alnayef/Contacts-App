@@ -16,35 +16,33 @@ class CompanyInfomationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        drawer: DrawerWidget(),
-        appBar: AppBarWidget(),
-        backgroundColor: Color(0xFFF7F7F7),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 0),
-                  child: Text(
-                    "Home / Company Profile",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  ),
+    return Scaffold(
+      drawer: DrawerWidget(),
+      appBar: AppBarWidget(),
+      backgroundColor: Color(0xFFF7F7F7),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 24, bottom: 0),
+                child: Text(
+                  "Home / Company Profile",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                    bottom: 24,
-                  ),
-                  child: Divider(
-                    color: Colors.black26,
-                  ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 24,
                 ),
-                fromSction(context),
-              ],
-            ),
+                child: Divider(
+                  color: Colors.black26,
+                ),
+              ),
+              fromSction(context),
+            ],
           ),
         ),
       ),
