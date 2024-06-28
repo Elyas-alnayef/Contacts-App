@@ -57,8 +57,8 @@ Widget formSection(BuildContext context) {
         AuthTextField(
           controller: BlocProvider.of<LoginCubit>(context).emailController,
           validate: (value) {
-            if (value.isEmpty || !value.contains('@gmail.com')) {
-              return ValidatroErrors.emailValidagtorError;
+            if (value.isEmpty) {
+              return ValidatroErrors.requirdFieldsValidagtorError;
             } else {
               return null;
             }
