@@ -17,7 +17,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/utils/api_auth_service.dart';
-
 import 'features/auth/data/datasources/auth_local_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
 import 'features/company/domain/usecases/get_company_information.dart';
@@ -76,7 +75,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SharedPrefs.getData("token") == null ? LogInPage() : HomePage(),
+        home: SharedPrefs.getData("token") ==null ? LogInPage() : HomePage(),
       ),
     );
   }

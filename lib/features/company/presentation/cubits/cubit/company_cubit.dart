@@ -20,7 +20,7 @@ class CompanyCubit extends Cubit<CompanyState> {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController zipController = TextEditingController();
-  String companyName = "";
+  String countryName = "";
   bool isEditingMode = false;
 
   CompanyCubit(
@@ -40,8 +40,7 @@ class CompanyCubit extends Cubit<CompanyState> {
     Navigator.of(context).pop();
   }
 
-  Future<void> onSaveChages(
-      EditCompanyUseCaseParameters params) async {
+  Future<void> onSaveChages(EditCompanyUseCaseParameters params) async {
     emit(CompanyLoadingState());
     Duration(milliseconds: 1500);
     var result = await editCompanyInformationUseCase.call(params);

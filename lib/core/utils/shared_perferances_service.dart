@@ -14,7 +14,7 @@ class SharedPrefs {
 
   static getData(String key) {
     String? data = sharedPreference.getString(key);
-    return data!;
+    return data;
   }
 
   static Future<void> clear(String key) async {

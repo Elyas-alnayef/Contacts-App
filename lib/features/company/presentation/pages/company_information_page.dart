@@ -267,7 +267,7 @@ Widget fromSction(BuildContext context) {
                             : state is CompanyLoadedState
                                 ? state.company['country']
                                 : BlocProvider.of<CompanyCubit>(context)
-                                    .companyName,
+                                    .countryName,
                         items: [
                           DropdownMenuItem(
                               child: Text("Syria"), value: 'Syria'),
@@ -282,22 +282,28 @@ Widget fromSction(BuildContext context) {
                 BlocBuilder<CompanyCubit, CompanyState>(
                   builder: (context, state) {
                     if (BlocProvider.of<CompanyCubit>(context).isEditingMode) {
-                      return SubmitButton(
-                          name: "Save",
-                          function: () {
-                            if (state is TextFieldChangedCompleteState) {
-                              context.read<CompanyCubit>().onSaveChages(
-                                  EditCompanyUseCaseParameters(
-                                      companyName: state.companyName!,
-                                      vatNumber: state.vat!,
-                                      streetOne: state.street1!,
-                                      streetTwo: state.street2!,
-                                      city: state.city!,
-                                      state: state.state!,
-                                      zip: state.zip!,
-                                      country: state.countryName!));
-                            }
-                          });
+                      if (state is CompanyLoadingState) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return SubmitButton(
+                            name: "Save",
+                            function: () {
+                              if (context.read<CompanyCubit>().formKey.currentState!.validate()) {
+                                if (state is TextFieldChangedCompleteState) {
+                                  context.read<CompanyCubit>().onSaveChages(
+                                      EditCompanyUseCaseParameters(
+                                          companyName: state.companyName!,
+                                          vatNumber: state.vat!,
+                                          streetOne: state.street1!,
+                                          streetTwo: state.street2!,
+                                          city: state.city!,
+                                          state: state.state!,
+                                          zip: state.zip!,
+                                          country: state.countryName!));
+                                }
+                              }
+                            });
+                      }
                     } else {
                       return EditButton(
                           width: double.infinity,
@@ -336,9 +342,9 @@ Widget fromSction(BuildContext context) {
             state.company['city'];
         BlocProvider.of<CompanyCubit>(context).stateController.text =
             state.company['state'];
-        BlocProvider.of<CompanyCubit>(context).companyName =
+        BlocProvider.of<CompanyCubit>(context).countryName =
             state.company['country'];
-        print(state.company);
+        print(BlocProvider.of<CompanyCubit>(context).countryName);
       } else {}
     },
   );
