@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class AuthTextField extends StatefulWidget {
   final String hitn;
   final bool isObscureText;
+  final bool isEnabled;
+
   final Widget? suffixIcon;
   final double height;
   final double sizedBoxHeight;
@@ -16,6 +18,7 @@ class AuthTextField extends StatefulWidget {
     this.isObscureText = false,
     this.suffixIcon = null,
     this.height = 56,
+    this.isEnabled = true,
     this.sizedBoxHeight = 8,
     required this.func,
     required this.validate,
@@ -66,6 +69,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
             onTapOutside: (newValue) {
               widget.func();
             },
+            enabled: widget.isEnabled,
             focusNode: _focusNode,
             onTap: () {
               setState(() {

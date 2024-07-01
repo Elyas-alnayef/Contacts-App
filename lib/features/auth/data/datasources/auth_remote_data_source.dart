@@ -1,5 +1,6 @@
 import 'package:contacts_app/core/utils/api_auth_service.dart';
 
+import '../../../../core/constant/api_end_points.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -24,7 +25,7 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
   @override
   Future<Map<String, dynamic>> logIn(String email, String password) async {
     var data = await apiService.logIn(
-        endPoint: "login", email: email, password: password);
+        endPoint: ApiEndPoints.loginEndPoint, email: email, password: password);
     return data;
   }
 
@@ -37,10 +38,9 @@ class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
   @override
   Future<String> signUp(SignUpUseCaseParameters params) async {
     var data = await apiService.signUp(
-      endPoint: "register",
+      endPoint: ApiEndPoints.registerEndPoint,
       params: params,
     );
-    
 
     return data.toString();
   }

@@ -285,17 +285,24 @@ Widget fromSction(BuildContext context) {
               height: 52,
               hitn: AppStrings.zip),
           const Height_32(),
-          DropDownCountriesList(
-              hint: "Select Your Country",
-              function: (value) {
-                BlocProvider.of<SignupCubit>(context)
-                    .countryNameSelected(value.toString());
-              },
-              items: [
-                DropdownMenuItem(child: Text("Syria"), value: 'Syria'),
-                DropdownMenuItem(child: Text("UAE"), value: 'UAE'),
-                DropdownMenuItem(child: Text("USA"), value: 'USA'),
-              ])
+          BlocBuilder<SignupCubit, SignupState>(
+            builder: (context, state) {
+              return DropDownCountriesList(
+                  items: [
+                    DropdownMenuItem(child: Text("Syria"), value: 'Syria'),
+                    DropdownMenuItem(child: Text("UAE"), value: 'UAE'),
+                    DropdownMenuItem(child: Text("USA"), value: 'USA'),
+                  ],
+                  hint: "Select Your Country",
+                  function: (value) {
+                    BlocProvider.of<SignupCubit>(context)
+                        .countryNameSelected(value.toString());
+                  },
+                  value: state is TextFieldChangedCompleteState
+                      ? state.countryName
+                      : null);
+            },
+          )
         ],
       ),
     ),

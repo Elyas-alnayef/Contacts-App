@@ -1,4 +1,5 @@
 import 'package:contacts_app/core/constant/app_routes.dart';
+import 'package:contacts_app/core/utils/api_company_service.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_login.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_signup.dart';
@@ -6,6 +7,12 @@ import 'package:contacts_app/features/auth/presentation/cubits/login/login_cubit
 import 'package:contacts_app/features/auth/presentation/cubits/signup/signup_cubit.dart';
 import 'package:contacts_app/features/auth/presentation/pages/login_page.dart';
 import 'package:contacts_app/features/auth/data/repositories/auth_repository_imp.dart';
+import 'package:contacts_app/features/company/data/datasources/company_local_data_source.dart';
+import 'package:contacts_app/features/company/data/datasources/company_remote_data_source.dart';
+import 'package:contacts_app/features/company/data/repositories/company_repository_imp.dart';
+import 'package:contacts_app/features/company/domain/usecases/edit_company_informayion.dart';
+import 'package:contacts_app/features/company/presentation/cubits/cubit/company_cubit.dart';
+import 'package:contacts_app/home_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +20,7 @@ import '../../../../core/utils/api_auth_service.dart';
 
 import 'features/auth/data/datasources/auth_local_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
+import 'features/company/domain/usecases/get_company_information.dart';
 
 void main() async {
   // await Hive.initFlutter();
@@ -38,6 +46,21 @@ class MyApp extends StatelessWidget {
                       AuthRemoteDataSourceImp(apiService: ApiService(Dio())),
                   authLocalDataSource: AuthLocalDataSourceImp()))),
         ),
+        BlocProvider<CompanyCubit>(
+          create: (context) => CompanyCubit(
+              GetCompanyInformationUseCase(
+                companyRepository: CompanyRepositoryImpl(
+                    companyRemoteDataSourceImpl: CompanyRemoteDataSourceImpl(
+                        apiService: CompanyApiService(Dio())),
+                    compayLocalDataSourceImpl: CompayLocalDataSourceImpl()),
+              ),
+              EditCompanyInformationUseCase(
+                  companyRepository: CompanyRepositoryImpl(
+                      companyRemoteDataSourceImpl: CompanyRemoteDataSourceImpl(
+                          apiService: CompanyApiService(Dio())),
+                      compayLocalDataSourceImpl: CompayLocalDataSourceImpl())))
+            ..getCompanyInfomation(),
+        ),
         BlocProvider<SignupCubit>(
             create: (context) => SignupCubit(UserSignUp(
                 authRepository: AuthRepositoryImpl(
@@ -53,7 +76,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: LogInPage(),
+        home: SharedPrefs.getData("token") == null ? LogInPage() : HomePage(),
       ),
     );
   }

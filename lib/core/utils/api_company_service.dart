@@ -7,7 +7,7 @@ class CompanyApiService {
   final baseUrl = "https://ms.itmd-b1.com:5123/api/";
   CompanyApiService(this.dio);
 
-  Future<String> editCompany(
+  Future<Map<String, dynamic>> editCompany(
       {required String endPoint,
       required EditCompanyUseCaseParameters params,
       required String token}) async {
@@ -26,7 +26,7 @@ class CompanyApiService {
           "Authorization": "Bearer $token",
         }));
 
-    return response.toString();
+    return response.data;
   }
 
   Future<Map<String, dynamic>> getCompany({

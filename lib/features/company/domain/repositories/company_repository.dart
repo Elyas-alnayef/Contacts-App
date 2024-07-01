@@ -2,10 +2,9 @@ import '../../../../core/error/failur.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CompanyRepository {
-  Future<Either<Failure, String>> createNewCompany(
+  Future<Either<Failure, Map<String, dynamic>>> editCompany(
       EditCompanyUseCaseParameters params);
-  Future<Either<Failure, Map<String, dynamic>>> getCompany(
-      GetCompanyInformationUseCaseParameters params);
+  Future<Either<Failure, Map<String, dynamic>>> getCompany();
 }
 
 class EditCompanyUseCaseParameters {
@@ -30,8 +29,6 @@ class EditCompanyUseCaseParameters {
 
 class GetCompanyInformationUseCaseParameters {
   final String usertoken;
-  final String companyId;
 
-  GetCompanyInformationUseCaseParameters(
-      {required this.usertoken, required this.companyId});
+  GetCompanyInformationUseCaseParameters({required this.usertoken});
 }

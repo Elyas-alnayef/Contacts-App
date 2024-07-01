@@ -4,15 +4,14 @@ import 'package:dartz/dartz.dart';
 
 import '../repositories/company_repository.dart';
 
-class GetCompanyInformationUseCase
+class EditCompanyInformationUseCase
     extends UseCase<dynamic, EditCompanyUseCaseParameters> {
   final CompanyRepository companyRepository;
 
-  GetCompanyInformationUseCase({required this.companyRepository});
+  EditCompanyInformationUseCase({required this.companyRepository});
 
   @override
   Future<Either<Failure, dynamic>> call(EditCompanyUseCaseParameters params) {
-    // TODO: implement call
-    throw UnimplementedError();
+    return companyRepository.editCompany(params);
   }
 }

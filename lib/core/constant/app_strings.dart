@@ -22,6 +22,7 @@ class AppStrings {
   static const String userName = "UserName";
   static const String forgetpassword = "forget your password ?";
   static const String myprofile = "My Profile";
+  static const String edit = "Edit";
 }
 
 class HelpersMessages {

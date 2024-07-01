@@ -1,19 +1,18 @@
+import 'dart:ffi';
+
 import 'package:bloc/bloc.dart';
-import 'package:contacts_app/features/auth/domain/usecases/user_signup.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
-import '../../../domain/repositories/auth_repository.dart';
+import '../../../domain/repositories/company_repository.dart';
+import '../../../domain/usecases/edit_company_informayion.dart';
+import '../../../domain/usecases/get_company_information.dart';
+part 'company_state.dart';
 
-part 'signup_state.dart';
+class CompanyCubit extends Cubit<CompanyState> {
+  final GetCompanyInformationUseCase getCompanyInformationUseCase;
+  final EditCompanyInformationUseCase editCompanyInformationUseCase;
 
-class SignupCubit extends Cubit<SignupState> {
-  final UserSignUp signUpUseCase;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController firstNameController = TextEditingController();
   TextEditingController companyNameController = TextEditingController();
   TextEditingController vatController = TextEditingController();
   TextEditingController streetController = TextEditingController();
@@ -21,66 +20,43 @@ class SignupCubit extends Cubit<SignupState> {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController zipController = TextEditingController();
-  String countryName = '';
-  bool isPasswordshown = false;
-  IconData suffixPasswordIcon = Icons.visibility_off;
+  String companyName = "";
+  bool isEditingMode = false;
 
-  SignupCubit(this.signUpUseCase) : super(SignupInitial());
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    lastNameController.dispose();
-    firstNameController.dispose();
-    companyNameController.dispose();
-    vatController.dispose();
-    streetController.dispose();
-    street2Controller.dispose();
-    cityController.dispose();
-    stateController.dispose();
-    zipController.dispose();
+  CompanyCubit(
+      this.getCompanyInformationUseCase, this.editCompanyInformationUseCase)
+      : super(CompanyInitial());
+  Future<void> getCompanyInfomation() async {
+    emit(CompanyLoadingState());
+    var result = await getCompanyInformationUseCase.call();
+    result.fold((error) {
+      emit(LoadingCompanyFailerState(message: error.message));
+    }, (response) {
+      emit(CompanyLoadedState(company: response));
+    });
   }
 
-  void chagePasswordVisibility() {
-    isPasswordshown = !isPasswordshown;
-    suffixPasswordIcon =
-        isPasswordshown ? Icons.visibility : Icons.visibility_off;
-    emit(ChangePasswordSuffixIconSate());
+  void backToPrevious(context) {
+    Navigator.of(context).pop();
   }
 
-  void passwordTextFieldChanged() {
-    if (state is TextFieldChangedCompleteState) {
-      emit((state as TextFieldChangedCompleteState)
-          .copyWith(password: passwordController.text));
-    } else {
-      emit(TextFieldChangedCompleteState(password: passwordController.text));
-    }
+  Future<void> onSaveChages(
+      EditCompanyUseCaseParameters params) async {
+    emit(CompanyLoadingState());
+    Duration(milliseconds: 1500);
+    var result = await editCompanyInformationUseCase.call(params);
+    result.fold((error) {
+      emit(LoadingCompanyFailerState(message: error.message));
+    }, (response) {
+      emit((CompanyLoadedState(company: response)));
+    });
+    isEditingMode = false;
+    emit(SavedState());
   }
 
-  void emailTextFieldChanged() {
-    if (state is TextFieldChangedCompleteState) {
-      emit((state as TextFieldChangedCompleteState)
-          .copyWith(email: emailController.text));
-    } else {
-      emit(TextFieldChangedCompleteState(email: emailController.text));
-    }
-  }
-
-  void firstNameTextFieldChanged() {
-    if (state is TextFieldChangedCompleteState) {
-      emit((state as TextFieldChangedCompleteState)
-          .copyWith(firstName: firstNameController.text));
-    } else {
-      emit(TextFieldChangedCompleteState(firstName: firstNameController.text));
-    }
-  }
-
-  void lastNameTextFieldChanged() {
-    if (state is TextFieldChangedCompleteState) {
-      emit((state as TextFieldChangedCompleteState)
-          .copyWith(lastName: lastNameController.text));
-    } else {
-      emit(TextFieldChangedCompleteState(lastName: lastNameController.text));
-    }
+  void onEditMode() {
+    isEditingMode = true;
+    emit(CompanyEnableFormState(enableform: true));
   }
 
   void companyNameTextFieldChanged() {
@@ -148,23 +124,11 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   void countryNameSelected(String country) {
-    countryName = country;
     if (state is TextFieldChangedCompleteState) {
       emit((state as TextFieldChangedCompleteState)
           .copyWith(countryName: country));
     } else {
       emit(TextFieldChangedCompleteState(countryName: country));
     }
-  }
-
-  Future<void> signUp(SignUpUseCaseParameters params) async {
-    emit(RegisterLoading());
-    Duration(milliseconds: 1500);
-    var result = await signUpUseCase.call(params);
-    result.fold((error) {
-      emit(RegisteFaild(message: error.message));
-    }, (response) {
-      emit(RegisterSuccess(message: response));
-    });
   }
 }

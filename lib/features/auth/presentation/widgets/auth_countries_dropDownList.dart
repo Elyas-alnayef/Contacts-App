@@ -4,11 +4,13 @@ class DropDownCountriesList extends StatelessWidget {
   final String hint;
   final List<DropdownMenuItem> items;
   final Function(String) function;
+  final String? value;
   const DropDownCountriesList(
       {super.key,
       required this.hint,
       required this.function,
-      required this.items});
+      required this.items,
+      this.value = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class DropDownCountriesList extends StatelessWidget {
         onChanged: (value) {
           function(value);
         },
-        value: null,
+        value: value,
       ),
     );
   }
