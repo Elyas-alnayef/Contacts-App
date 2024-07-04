@@ -84,7 +84,11 @@ Widget contactsListSection(BuildContext context) {
       child: ListView.separated(
           primary: false,
           itemBuilder: (context, index) {
-            return const UserCard();
+            return UserCard(
+              func: () {
+                Navigator.of(context).pushNamed(RoutesNames.contactProfile);
+              },
+            );
           },
           separatorBuilder: (context, index) {
             return SizedBox(height: 16);

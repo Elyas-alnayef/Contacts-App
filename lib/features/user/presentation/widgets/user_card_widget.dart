@@ -1,8 +1,8 @@
-import 'package:contacts_app/core/constant/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({super.key});
+  final Function func;
+  const UserCard({required this.func, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class UserCard extends StatelessWidget {
           border: Border.all(color: Colors.black26)),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(RoutesNames.userProfile);
+          func();
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -1,3 +1,4 @@
+import 'package:contacts_app/features/contacts/presentation/pages/contact_profile_page.dart';
 import 'package:contacts_app/features/contacts/presentation/pages/contacts_home_page.dart';
 import 'package:contacts_app/features/contacts/presentation/pages/craete_new_contact_page.dart';
 import 'package:contacts_app/features/contacts/presentation/pages/export_to_pdf_page.dart';
@@ -26,6 +27,7 @@ class RoutesNames {
   static const String createNewContact = "/createnewcontact";
   static const String exportToPDF = "/exporttopdf";
   static const String sendEmail = "/sendemail";
+  static const String contactProfile = "/contactprofile";
 }
 
 Map<String, Widget Function(BuildContext)> routes = {
@@ -41,4 +43,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   RoutesNames.createNewContact: (context) => CreateNewContactPage(),
   RoutesNames.exportToPDF: (context) => ExportToPDFPage(),
   RoutesNames.sendEmail: (context) => SendEmailPage(),
+  RoutesNames.contactProfile: (context) => ContactProfilePage(),
 };

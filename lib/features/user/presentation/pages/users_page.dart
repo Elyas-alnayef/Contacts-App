@@ -75,7 +75,11 @@ Widget usersListSection(BuildContext context) {
       child: ListView.separated(
           primary: false,
           itemBuilder: (context, index) {
-            return const UserCard();
+            return UserCard(
+              func: () {
+                Navigator.of(context).pushNamed(RoutesNames.userProfile);
+              },
+            );
           },
           separatorBuilder: (context, index) {
             return SizedBox(height: 16);
