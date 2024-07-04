@@ -55,7 +55,9 @@ class DrawerWidget extends StatelessWidget {
             ),
             DrawerNavigationButton(
               buttonName: AppStrings.contacts,
-              func: () {},
+              func: () {
+                Navigator.of(context).pushNamed(RoutesNames.contactsHome);
+              },
             ),
             SizedBox(
               height: 4,
@@ -63,6 +65,7 @@ class DrawerWidget extends StatelessWidget {
             DrawerNavigationButton(
               buttonName: AppStrings.companyProfile,
               func: () {
+                //BlocProvider.of<CompanyCubit>(context).getCompanyInfomation();
                 Navigator.of(context).pushNamed(RoutesNames.companyProfile);
               },
             ),
@@ -71,7 +74,9 @@ class DrawerWidget extends StatelessWidget {
             ),
             DrawerNavigationButton(
               buttonName: AppStrings.user,
-              func: () {},
+              func: () {
+                Navigator.of(context).pushNamed(RoutesNames.users);
+              },
             ),
             SizedBox(
               height: 4,

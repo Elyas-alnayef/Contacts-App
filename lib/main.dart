@@ -12,7 +12,7 @@ import 'package:contacts_app/features/company/data/datasources/company_remote_da
 import 'package:contacts_app/features/company/data/repositories/company_repository_imp.dart';
 import 'package:contacts_app/features/company/domain/usecases/edit_company_informayion.dart';
 import 'package:contacts_app/features/company/presentation/cubits/cubit/company_cubit.dart';
-import 'package:contacts_app/home_page.dart';
+import 'package:contacts_app/features/home/presentation/pages/home_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

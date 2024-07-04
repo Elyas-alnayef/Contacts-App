@@ -4,7 +4,6 @@ class AuthTextField extends StatefulWidget {
   final String hitn;
   final bool isObscureText;
   final bool isEnabled;
-
   final Widget? suffixIcon;
   final double height;
   final double sizedBoxHeight;

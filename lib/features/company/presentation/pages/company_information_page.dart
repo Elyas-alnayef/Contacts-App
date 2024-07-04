@@ -7,6 +7,7 @@ import '../../../../core/constant/app_strings.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/drawer.dart';
 import '../../../../core/widgets/editbutton.dart';
+import '../../../../core/widgets/page_title.dart';
 import '../../../auth/presentation/widgets/auth_countries_dropDownList.dart';
 import '../../../auth/presentation/widgets/auth_navigate_button.dart';
 import '../../../auth/presentation/widgets/auth_textfield.dart';
@@ -27,22 +28,9 @@ class CompanyInfomationPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 24, bottom: 0),
-                child: Text(
-                  "Home / Company Profile",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 24,
-                ),
-                child: Divider(
-                  color: Colors.black26,
-                ),
+              PageTitle(
+                title: "Home / Company Profile",
               ),
               fromSction(context),
             ],
@@ -53,17 +41,7 @@ class CompanyInfomationPage extends StatelessWidget {
   }
 }
 
-//title
-Widget titleSection() {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 24, top: 8),
-    child: Text(
-      AppStrings.myprofile,
-      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-    ),
-  );
-}
-
+//form
 Widget fromSction(BuildContext context) {
   return BlocConsumer<CompanyCubit, CompanyState>(
     builder: (context, state) {
@@ -288,7 +266,11 @@ Widget fromSction(BuildContext context) {
                         return SubmitButton(
                             name: "Save",
                             function: () {
-                              if (context.read<CompanyCubit>().formKey.currentState!.validate()) {
+                              if (context
+                                  .read<CompanyCubit>()
+                                  .formKey
+                                  .currentState!
+                                  .validate()) {
                                 if (state is TextFieldChangedCompleteState) {
                                   context.read<CompanyCubit>().onSaveChages(
                                       EditCompanyUseCaseParameters(
@@ -344,7 +326,6 @@ Widget fromSction(BuildContext context) {
             state.company['state'];
         BlocProvider.of<CompanyCubit>(context).countryName =
             state.company['country'];
-        print(BlocProvider.of<CompanyCubit>(context).countryName);
       } else {}
     },
   );
