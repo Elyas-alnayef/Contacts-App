@@ -5,12 +5,14 @@ class DropDownCountriesList extends StatelessWidget {
   final List<DropdownMenuItem> items;
   final Function(String) function;
   final String? value;
+  final String? Function(dynamic)? validator;
   const DropDownCountriesList(
       {super.key,
       required this.hint,
       required this.function,
       required this.items,
-      this.value = ""});
+      this.value = "",
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,10 @@ class DropDownCountriesList extends StatelessWidget {
             topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)),
         color: Color(0xFFF7F7F7),
       ),
-      child: DropdownButton(
-        underline: SizedBox(),
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(border: InputBorder.none),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: validator,
         isExpanded: true,
         hint: Text("$hint"),
         items: items,

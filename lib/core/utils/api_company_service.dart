@@ -37,7 +37,7 @@ class CompanyApiService {
         options: Options(headers: {
           "Authorization": "Bearer $token",
         }));
-
+    
     return response.data;
   }
 }

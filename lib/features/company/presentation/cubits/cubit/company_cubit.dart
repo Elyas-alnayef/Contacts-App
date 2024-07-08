@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:bloc/bloc.dart';
+import 'package:contacts_app/features/company/domain/entities/company_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/repositories/company_repository.dart';

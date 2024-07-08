@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TogllerWidget extends StatelessWidget {
+  final bool value;
   final String lable;
-  final Function(bool) func;
-  const TogllerWidget({super.key, required this.lable, required this.func});
+  final Function() func;
+  const TogllerWidget({super.key, required this.lable, required this.func, this.value=false});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class TogllerWidget extends StatelessWidget {
           width: 8,
         ),
         Switch(
-          value: true,
-          onChanged: (value) {
-            func(value);
+          value: value,
+          onChanged: (val) {
+            func();
           },
         ),
       ],

@@ -1,8 +1,8 @@
+import 'package:contacts_app/core/hepres/toast.dart';
 import 'package:contacts_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:contacts_app/features/company/domain/repositories/company_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/constant/app_strings.dart';
 import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/drawer.dart';
@@ -235,6 +235,13 @@ Widget fromSction(BuildContext context) {
                 BlocBuilder<CompanyCubit, CompanyState>(
                   builder: (context, state) {
                     return DropDownCountriesList(
+                        validator: (value) {
+                          if (value == null) {
+                            return ValidatroErrors.requirdFieldsValidagtorError;
+                          } else {
+                            return null;
+                          }
+                        },
                         hint: "Select Your Country",
                         function: (value) {
                           BlocProvider.of<CompanyCubit>(context)
@@ -243,17 +250,12 @@ Widget fromSction(BuildContext context) {
                         value: state is TextFieldChangedCompleteState
                             ? state.countryName
                             : state is CompanyLoadedState
-                                ? state.company['country']
-                                : BlocProvider.of<CompanyCubit>(context)
-                                    .countryName,
-                        items: [
-                          DropdownMenuItem(
-                              child: Text("Syria"), value: 'Syria'),
-                          DropdownMenuItem(child: Text("UAE"), value: 'UAE'),
-                          DropdownMenuItem(child: Text("USA"), value: 'USA'),
-                          DropdownMenuItem(
-                              child: Text("Sodan"), value: 'sodan'),
-                        ]);
+                                ? state.company.countryName
+                                : null,
+                        items: countries.map((e) {
+                          return DropdownMenuItem(
+                              child: Text("$e"), value: '$e');
+                        }).toList());
                   },
                 ),
                 SizedBox(height: 44),
@@ -311,22 +313,34 @@ Widget fromSction(BuildContext context) {
     listener: (BuildContext context, CompanyState state) {
       if (state is CompanyLoadedState) {
         BlocProvider.of<CompanyCubit>(context).companyNameController.text =
-            state.company['companyName'];
+            state.company.companName;
         BlocProvider.of<CompanyCubit>(context).streetController.text =
-            state.company['streetOne'];
+            state.company.street1;
         BlocProvider.of<CompanyCubit>(context).street2Controller.text =
-            state.company['streetTwo'];
+            state.company.street2;
         BlocProvider.of<CompanyCubit>(context).vatController.text =
-            state.company['vatNumber'];
+            state.company.vatNumber;
         BlocProvider.of<CompanyCubit>(context).zipController.text =
-            state.company['zip'];
+            state.company.zip;
         BlocProvider.of<CompanyCubit>(context).cityController.text =
-            state.company['city'];
+            state.company.city;
         BlocProvider.of<CompanyCubit>(context).stateController.text =
-            state.company['state'];
+            state.company.state;
         BlocProvider.of<CompanyCubit>(context).countryName =
-            state.company['country'];
-      } else {}
+            state.company.countryName;
+      } else if (state is LoadingCompanyFailerState) {
+        print(state.message);
+        showToast(state.message, Colors.red);
+      }
     },
   );
 }
+// [
+                          
+//                           DropdownMenuItem(
+//                               child: Text("Syria"), value: 'Syria'),
+//                           DropdownMenuItem(child: Text("UAE"), value: 'UAE'),
+//                           DropdownMenuItem(child: Text("USA"), value: 'USA'),
+//                           DropdownMenuItem(
+//                               child: Text("Sodan"), value: 'sodan'),
+//                         ]

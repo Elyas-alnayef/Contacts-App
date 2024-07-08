@@ -1,5 +1,6 @@
 import 'package:contacts_app/core/constant/app_routes.dart';
 import 'package:contacts_app/core/utils/api_company_service.dart';
+import 'package:contacts_app/core/utils/hive_service.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_login.dart';
 import 'package:contacts_app/features/auth/domain/usecases/user_signup.dart';
@@ -13,19 +14,23 @@ import 'package:contacts_app/features/company/data/repositories/company_reposito
 import 'package:contacts_app/features/company/domain/usecases/edit_company_informayion.dart';
 import 'package:contacts_app/features/company/presentation/cubits/cubit/company_cubit.dart';
 import 'package:contacts_app/features/home/presentation/pages/home_page.dart';
+import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import '../../../../core/utils/api_auth_service.dart';
 import 'features/auth/data/datasources/auth_local_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
+import 'features/company/domain/entities/company_entity.dart';
 import 'features/company/domain/usecases/get_company_information.dart';
+import 'features/user/data/datasources/remote_data_source.dart';
 
 void main() async {
-  // await Hive.initFlutter();
-  // Hive.registerAdapter(UserEntityAdapter());
-  // await Hive.openBox('AuthenticatedUser');
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  CompanyHiveServices.boxinit<CompanyEntity>(
+      CompanyEntityAdapter(), "CompanyBox");
   await SharedPrefs.init();
   runApp(const MyApp());
 }
@@ -75,7 +80,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: SharedPrefs.getData("token") ==null ? LogInPage() : HomePage(),
+        home: SharedPrefs.getData("token") == null ? LogInPage() : HomePage(),
       ),
     );
   }
@@ -128,3 +133,29 @@ class MyApp extends StatelessWidget {
 //   }
 //     var x = await SharedPrefs.getData("token");
 //     print(x);
+
+
+
+
+
+//user test
+//
+//
+//
+//create new user 
+// var data = await userremote.createNewUser(
+//       endPoint: "Users",
+//       params: CreateNewUserUseCaseParams(
+//           firstname: "hadee",
+//           lastName: "Nayef",
+//           email: "hadee@gmial.com",
+//           phoneNumber: "576849457",
+//           role: "User"),
+//       token:
+//           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0YTY0YTEyMi05ZDZkLTRlNDktYWMzYS1lYmQ5YjA5YTliMjkiLCJJZCI6ImNiMmQ5MGU1LTMxNGYtNDhjZC05YTBhLWVjOGQzNTNlMjhhOSIsIkNvbXBhbnlJZCI6IjE1OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ik93bmVyIiwiZXhwIjoxNzIwNTI2OTI0LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.Yig3iEtOJ93aPQjbKdR7OKvR50RD32qK28G75Qt_Ub4");
+
+
+
+
+
+

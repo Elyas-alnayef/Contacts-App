@@ -1,10 +1,12 @@
+import 'package:contacts_app/features/company/domain/entities/company_entity.dart';
+
 import '../../../../core/error/failur.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class CompanyRepository {
-  Future<Either<Failure, Map<String, dynamic>>> editCompany(
+  Future<Either<Failure, CompanyEntity>> editCompany(
       EditCompanyUseCaseParameters params);
-  Future<Either<Failure, Map<String, dynamic>>> getCompany();
+  Future<Either<Failure, CompanyEntity>> getCompany();
 }
 
 class EditCompanyUseCaseParameters {

@@ -8,7 +8,7 @@ final class CompanyInitial extends CompanyState {}
 final class CompanyLoadingState extends CompanyState {}
 
 final class CompanyLoadedState extends CompanyState {
-  final Map<String, dynamic> company;
+  final CompanyEntity company;
   CompanyLoadedState({required this.company});
 }
 

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,7 +70,11 @@ Widget fromSction(BuildContext context) {
                           child: SectionTitle(title: AppStrings.userDetials)),
                       Expanded(
                           child: TogllerWidget(
-                        func: (p0) {},
+                        func: () {
+                          context
+                              .read<UserInfromationCubit>()
+                              .changeLookState(false);
+                        },
                         lable: "Unlocked",
                       )),
                     ],

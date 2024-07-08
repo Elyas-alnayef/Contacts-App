@@ -46,14 +46,54 @@ class ContactsHome extends StatelessWidget {
                     width: 16,
                   ),
                   Expanded(
-                    child: UsersFeatureButton(
-                      func: () {
-                        Navigator.of(context)
-                            .pushNamed(RoutesNames.exportToPDF);
-                      },
-                      buttonColor: Color.fromRGBO(78, 115, 223, 1),
-                      buttonName: AppStrings.exportTo,
-                    ),
+                    child: PopupMenuButton(
+                        constraints: BoxConstraints(maxWidth: 154),
+                        offset: Offset(0, 48),
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem(
+                                child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(RoutesNames.sendEmail);
+                              },
+                              child: Text(
+                                "Send via Email",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            )),
+                            PopupMenuItem(
+                                child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(RoutesNames.exportToPDF);
+                              },
+                              child: Text(
+                                "PDF File",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    color: Colors.black),
+                              ),
+                            )),
+                          ];
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: Text(AppStrings.exportTo,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400)),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Color.fromRGBO(78, 115, 223, 1)),
+                          height: 48,
+                        )),
                   ),
                 ],
               ),

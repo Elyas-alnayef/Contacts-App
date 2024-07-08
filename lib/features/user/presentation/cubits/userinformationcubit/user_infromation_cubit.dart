@@ -14,5 +14,11 @@ class UserInfromationCubit extends Cubit<UserInfromationState> {
   void backToPrevious(context) {
     Navigator.pop(context);
   }
-  
+
+  void changeLookState(bool currentState) {
+    if (state is LoadedUserInfromationState) {
+      emit((state as LoadedUserInfromationState)
+          .copyWith(isUnlooked: !currentState));
+    }
+  }
 }

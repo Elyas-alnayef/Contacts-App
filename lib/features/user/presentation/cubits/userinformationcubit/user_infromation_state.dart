@@ -23,7 +23,7 @@ final class LoadedUserInfromationState extends UserInfromationState {
       this.userType,
       this.isUnlooked,
       this.isReadOnly});
-  LoadedUserInfromationState copyWith(
+  LoadedUserInfromationState copyWith({
     Map<String, dynamic>? user,
     String? email,
     String? firstName,
@@ -32,7 +32,7 @@ final class LoadedUserInfromationState extends UserInfromationState {
     String? userType,
     bool? isUnlooked,
     bool? isReadOnly,
-  ) {
+  }) {
     return LoadedUserInfromationState(
       user: user ?? this.user,
       email: email ?? this.email,
