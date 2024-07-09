@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DropDownCountriesList extends StatelessWidget {
   final String hint;
   final List<DropdownMenuItem> items;
-  final Function(String) function;
+  final Function(String?) function;
   final String? value;
   final String? Function(dynamic)? validator;
   const DropDownCountriesList(
@@ -11,7 +11,7 @@ class DropDownCountriesList extends StatelessWidget {
       required this.hint,
       required this.function,
       required this.items,
-      this.value = "",
+      this.value,
       this.validator});
 
   @override

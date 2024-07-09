@@ -1,7 +1,6 @@
 import 'package:contacts_app/core/error/failur.dart';
 import 'package:contacts_app/features/auth/data/datasources/auth_local_data_source.dart';
 import 'package:contacts_app/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:contacts_app/features/auth/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -12,11 +11,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   AuthRepositoryImpl(
       {required this.authLocalDataSource, required this.authRemoteDataSource});
-  @override
-  Future<Either<Failure, UserEntity>> fetchCurrentAuthenticatedUser() {
-    // TODO: implement fetchCurrentAuthenticatedUser
-    throw UnimplementedError();
-  }
+ 
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> logIn(

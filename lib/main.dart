@@ -24,7 +24,6 @@ import 'features/auth/data/datasources/auth_local_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
 import 'features/company/domain/entities/company_entity.dart';
 import 'features/company/domain/usecases/get_company_information.dart';
-import 'features/user/data/datasources/remote_data_source.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

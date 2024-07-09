@@ -1,4 +1,3 @@
-import 'package:contacts_app/features/auth/domain/entities/user_entity.dart';
 import 'package:contacts_app/features/company/data/models/company_model.dart';
 import 'package:contacts_app/features/company/domain/entities/company_entity.dart';
 import 'package:hive_flutter/adapters.dart';

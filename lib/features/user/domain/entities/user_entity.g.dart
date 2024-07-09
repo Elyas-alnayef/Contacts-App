@@ -17,6 +17,8 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserEntity(
+      status: fields[5] as String,
+      id: fields[6] as String,
       firstName: fields[0] as String,
       lastName: fields[1] as String,
       email: fields[2] as String,
@@ -28,7 +30,7 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
   @override
   void write(BinaryWriter writer, UserEntity obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.firstName)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class UserEntityAdapter extends TypeAdapter<UserEntity> {
       ..writeByte(3)
       ..write(obj.phoneNumber)
       ..writeByte(4)
-      ..write(obj.role);
+      ..write(obj.role)
+      ..writeByte(5)
+      ..write(obj.status)
+      ..writeByte(6)
+      ..write(obj.id);
   }
 
   @override

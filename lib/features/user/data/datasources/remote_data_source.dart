@@ -3,7 +3,7 @@ import 'package:contacts_app/features/user/domain/repositoies/user_repository.da
 import 'package:dio/dio.dart';
 
 abstract class UserRemoteDtatSource {
-  Future getAllUsers({required String token, required String endPoint});
+  Future <List<dynamic>>getAllUsers({ required String endPoint});
 
   Future<Map<String, dynamic>> getCurrentUser({required String endPoint});
 
@@ -17,7 +17,7 @@ abstract class UserRemoteDtatSource {
   Future<Map<String, dynamic>> createNewUser(
       {required String endPoint,
       required CreateNewUserUseCaseParams params,
-      required String token});
+      });
 
   Future<Map<String, dynamic>> updateUserInformaion(
       {required String endPoint,
@@ -28,12 +28,13 @@ abstract class UserRemoteDtatSource {
 class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
   final Dio dio;
   final baseUrl = "https://ms.itmd-b1.com:5123/api/";
+  String token = SharedPrefs.getData("token");
   UserRemoteDtatSourceImpl({required this.dio});
   @override
   Future<Map<String, dynamic>> createNewUser(
       {required String endPoint,
       required CreateNewUserUseCaseParams params,
-      required String token}) async {
+      }) async {
     var response = await dio.post('$baseUrl$endPoint',
         options: Options(headers: {
           "Authorization": "Bearer $token",
@@ -49,7 +50,7 @@ class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
   }
 
   @override
-  Future getAllUsers({required String token, required String endPoint}) async {
+  Future <List<dynamic>> getAllUsers({ required String endPoint}) async {
     var respose = await dio.get("$baseUrl$endPoint",
         options: Options(headers: {
           "Authorization": "Bearer $token",

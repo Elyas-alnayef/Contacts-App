@@ -1,26 +1,18 @@
 import 'package:contacts_app/core/utils/api_auth_service.dart';
 
 import '../../../../core/constant/api_end_points.dart';
-import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 abstract class AuthRemoteDataSource {
   Future<Map<String, dynamic>> logIn(String emial, String password);
   Future<String> signUp(SignUpUseCaseParameters params);
   Future<String> resetPassword();
-  Future<UserEntity> fetchCurrentAuthenticatedUser();
 }
 
 class AuthRemoteDataSourceImp extends AuthRemoteDataSource {
   final ApiService apiService;
 
   AuthRemoteDataSourceImp({required this.apiService});
-  @override
-  Future<UserEntity> fetchCurrentAuthenticatedUser() {
-    // TODO: implement fetchCurrentAuthenticatedUser
-    //after fetch the user we will save the entity in hive
-    throw UnimplementedError();
-  }
 
   @override
   Future<Map<String, dynamic>> logIn(String email, String password) async {

@@ -1,4 +1,5 @@
 import 'package:contacts_app/core/constant/app_routes.dart';
+import 'package:contacts_app/features/user/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/constant/app_strings.dart';
@@ -113,7 +114,6 @@ class ContactsHome extends StatelessWidget {
 //contacts
 Widget contactsListSection(BuildContext context) {
   return Container(
-      height: 1060,
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 24),
       padding: EdgeInsets.only(top: 24, bottom: 24, left: 16, right: 16),
@@ -123,8 +123,18 @@ Widget contactsListSection(BuildContext context) {
       ),
       child: ListView.separated(
           primary: false,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return UserCard(
+              user: UserEntity(
+                  status: "Locked",
+                  id: "wqdqwdqwd",
+                  firstName: "Ahmad",
+                  lastName: "Ricardo",
+                  email: "ahma@gmail.com",
+                  phoneNumber: "0982374884",
+                  role: "User"),
               func: () {
                 Navigator.of(context).pushNamed(RoutesNames.contactProfile);
               },
