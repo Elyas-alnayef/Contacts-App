@@ -39,7 +39,6 @@ Map<String, Widget Function(BuildContext)> routes = {
   RoutesNames.resetpassword: (context) => ResetPasswordPage(),
   RoutesNames.home: (context) => HomePage(),
   RoutesNames.companyProfile: (context) => CompanyInfomationPage(),
-  RoutesNames.userProfile: (context) => UserInformationPage(),
   RoutesNames.users: (context) => UsersPage(),
   RoutesNames.contactsHome: (context) => ContactsHome(),
   RoutesNames.createNewContact: (context) => CreateNewContactPage(),

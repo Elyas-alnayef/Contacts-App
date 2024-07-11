@@ -8,8 +8,7 @@ abstract class UserRepository {
   Future<Either<Failure, UserEntity>> getUserInformation();
   Future<Either<Failure, UserEntity>> getUserInformationByUserId(
       {required String userId});
-  Future<Either<Failure, Map<String, dynamic>>> deleteUserByUserId(
-      {required String userId});
+  Future<Either<Failure, dynamic>> deleteUserByUserId({required String userId});
   Future<Either<Failure, Map<String, dynamic>>> deleteAllUsers();
   Future<Either<Failure, UserEntity>> updateUserInfromation(
       {required UpdateUserInformationUseCaseParams params});

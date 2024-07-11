@@ -3,7 +3,7 @@ import 'package:contacts_app/features/user/domain/repositoies/user_repository.da
 import 'package:dio/dio.dart';
 
 abstract class UserRemoteDtatSource {
-  Future <List<dynamic>>getAllUsers({ required String endPoint});
+  Future<List<dynamic>> getAllUsers({required String endPoint});
 
   Future<Map<String, dynamic>> getCurrentUser({required String endPoint});
 
@@ -14,10 +14,10 @@ abstract class UserRemoteDtatSource {
 
   Future deleteUSerById({required String endPoint, required String userId});
 
-  Future<Map<String, dynamic>> createNewUser(
-      {required String endPoint,
-      required CreateNewUserUseCaseParams params,
-      });
+  Future<Map<String, dynamic>> createNewUser({
+    required String endPoint,
+    required CreateNewUserUseCaseParams params,
+  });
 
   Future<Map<String, dynamic>> updateUserInformaion(
       {required String endPoint,
@@ -31,10 +31,10 @@ class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
   String token = SharedPrefs.getData("token");
   UserRemoteDtatSourceImpl({required this.dio});
   @override
-  Future<Map<String, dynamic>> createNewUser(
-      {required String endPoint,
-      required CreateNewUserUseCaseParams params,
-      }) async {
+  Future<Map<String, dynamic>> createNewUser({
+    required String endPoint,
+    required CreateNewUserUseCaseParams params,
+  }) async {
     var response = await dio.post('$baseUrl$endPoint',
         options: Options(headers: {
           "Authorization": "Bearer $token",
@@ -50,7 +50,7 @@ class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
   }
 
   @override
-  Future <List<dynamic>> getAllUsers({ required String endPoint}) async {
+  Future<List<dynamic>> getAllUsers({required String endPoint}) async {
     var respose = await dio.get("$baseUrl$endPoint",
         options: Options(headers: {
           "Authorization": "Bearer $token",
@@ -119,6 +119,7 @@ class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
           "role": params.role,
           "status": params.status
         });
+
     return response.data;
   }
 }

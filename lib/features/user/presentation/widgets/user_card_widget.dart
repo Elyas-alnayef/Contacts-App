@@ -6,16 +6,22 @@ import '../../domain/entities/user_entity.dart';
 
 class UserCard extends StatefulWidget {
   final Function func;
+  final Function(UserEntity) selectFunc;
+
   final UserEntity user;
 
-  const UserCard({required this.func, super.key, required this.user});
+  const UserCard(
+      {required this.func,
+      super.key,
+      required this.user,
+      required this.selectFunc});
 
   @override
   State<UserCard> createState() => _UserCardState();
 }
 
 class _UserCardState extends State<UserCard> {
-  bool selected = false;
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,11 +43,12 @@ class _UserCardState extends State<UserCard> {
               children: [
                 Container(
                     child: Checkbox(
-                  value: selected,
+                  value: isSelected,
                   onChanged: (x) {
                     setState(() {
-                      selected = !selected;
-                    }); 
+                      isSelected = !isSelected;
+                    });
+                     isSelected?widget.selectFunc(widget.user):null;
                   },
                 )),
                 Spacer(),

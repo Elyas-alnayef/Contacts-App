@@ -3,10 +3,10 @@ import 'package:contacts_app/core/usecase/usecase.dart';
 import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dartz/dartz.dart';
 
-class DeleteUserByIdUseCas extends UseCase<dynamic, String> {
+class DeleteUserByIdUseCase extends UseCase<dynamic, String> {
   final UserRepository userRepository;
 
-  DeleteUserByIdUseCas({required this.userRepository});
+  DeleteUserByIdUseCase({required this.userRepository});
 
   @override
   Future<Either<Failure, dynamic>> call(String params) {

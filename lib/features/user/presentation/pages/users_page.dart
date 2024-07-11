@@ -5,9 +5,10 @@ import 'package:contacts_app/core/widgets/page_title.dart';
 import 'package:contacts_app/features/user/data/datasources/local_data_source.dart';
 import 'package:contacts_app/features/user/data/datasources/remote_data_source.dart';
 import 'package:contacts_app/features/user/data/repositories/user_repository_imp.dart';
-import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
+import 'package:contacts_app/features/user/domain/usecases/delete_uer.dart';
 import 'package:contacts_app/features/user/domain/usecases/get_all_users.dart';
 import 'package:contacts_app/features/user/presentation/cubits/userscubit/users_cubit.dart';
+import 'package:contacts_app/features/user/presentation/pages/user_information_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,10 @@ class UsersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UsersCubit(
+          deleteUserByIdUseCase: DeleteUserByIdUseCase(
+              userRepository: UserRepositoryImpl(
+                  userLocalDataSource: UserLocalDataSourceImpl(),
+                  userRemoteDtatSource: UserRemoteDtatSourceImpl(dio: Dio()))),
           getAllUsersUseCase: GetAllUsersUseCase(
               userRepository: UserRepositoryImpl(
                   userLocalDataSource: UserLocalDataSourceImpl(),
@@ -44,10 +49,47 @@ class UsersPage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: UsersFeatureButton(
-                        func: () {},
-                        buttonColor: Color.fromRGBO(252, 118, 106, 1),
-                        buttonName: AppStrings.delete,
+                      child: BlocConsumer<UsersCubit, UsersState>(
+                        listener: (context, state) {
+                          if (state is UsersSuccesState) {
+                            showToast("Successfuly deleted", Colors.green);
+                          }
+                        },
+                        builder: (context, state) {
+                          return UsersFeatureButton(
+                            func: () {
+                              if (state is UsersLoadedState) {
+                                if (context
+                                    .read<UsersCubit>()
+                                    .deletelis
+                                    .isNotEmpty) {
+                                  context
+                                      .read<UsersCubit>()
+                                      .deleteusers(state.deleteList!);
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Center(child: Text("OK")))
+                                        ],
+                                        content: Text(
+                                            "You should select at least one user to delete "),
+                                      );
+                                    },
+                                  );
+                                }
+                              }
+                            },
+                            buttonColor: Color.fromRGBO(252, 118, 106, 1),
+                            buttonName: AppStrings.delete,
+                          );
+                        },
                       ),
                     ),
                     SizedBox(
@@ -85,8 +127,7 @@ Widget usersListSection(BuildContext context) {
     listener: (context, state) {
       if (state is UsersFailureState) {
         showToast(state.message, Colors.red);
-        print(state.message);
-      } else {}
+      }
     },
     builder: (context, state) {
       if (state is UsersLoadedState) {
@@ -104,16 +145,23 @@ Widget usersListSection(BuildContext context) {
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return UserCard(
-                    user: state.users[index],
+                    selectFunc: (user) {
+                      context.read<UsersCubit>().deletelis.add(user.id);
+                      context.read<UsersCubit>().userSelected();
+                    },
+                    user: state.users![index],
                     func: () {
-                      Navigator.of(context).pushNamed(RoutesNames.userProfile);
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            UserInformationPage(userId: state.users![index].id),
+                      ));
                     },
                   );
                 },
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 16);
                 },
-                itemCount: state.users.length));
+                itemCount: state.users!.length));
       } else {
         return Container(
             margin: EdgeInsets.only(top: 50),

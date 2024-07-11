@@ -22,7 +22,6 @@ class UserRepositoryImpl extends UserRepository {
     try {
       var data = await userRemoteDtatSource.createNewUser(
           endPoint: "Users", params: params);
-      //UserEntity user = UserModel.fromJson(data);
       return right(UserModel.fromJson(data));
     } catch (e) {
       if (e is DioException) {
@@ -48,7 +47,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> deleteUserByUserId(
+  Future<Either<Failure, dynamic>> deleteUserByUserId(
       {required String userId}) async {
     try {
       var data = await userRemoteDtatSource.deleteUSerById(

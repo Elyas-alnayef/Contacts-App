@@ -8,6 +8,7 @@ class AuthTextField extends StatefulWidget {
   final double height;
   final double sizedBoxHeight;
   final TextEditingController controller;
+
   final void Function() func;
   final String? Function(String value) validate;
 

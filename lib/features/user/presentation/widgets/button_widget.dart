@@ -4,11 +4,12 @@ class UsersFeatureButton extends StatelessWidget {
   final String buttonName;
   final Color buttonColor;
   final Function func;
-  const UsersFeatureButton(
-      {required this.buttonColor,
-      required this.buttonName,
-      super.key,
-      required this.func});
+  UsersFeatureButton({
+    required this.buttonColor,
+    required this.buttonName,
+    super.key,
+    required this.func,
+  });
 
   @override
   Widget build(BuildContext context) {

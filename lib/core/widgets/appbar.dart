@@ -2,6 +2,9 @@ import 'package:contacts_app/core/constant/app_routes.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/user/presentation/pages/user_information_page.dart';
+import '../functions/token_decoder.dart';
+
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppBarWidget({super.key});
 
@@ -51,8 +54,13 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 PopupMenuItem(
                     child: TextButton.icon(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(RoutesNames.userProfile);
+                          Map<String, dynamic> decodedtoken =
+                              tokenDecoder(SharedPrefs.getData("token"));
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                UserInformationPage(userId: decodedtoken["Id"]),
+                          ));
                         },
                         icon: Icon(Icons.person,
                             color: Color.fromRGBO(0, 0, 0, 0.56), size: 24),

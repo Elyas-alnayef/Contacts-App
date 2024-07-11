@@ -127,6 +127,9 @@ Widget contactsListSection(BuildContext context) {
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             return UserCard(
+              selectFunc: (p0) {
+                
+              },
               user: UserEntity(
                   status: "Locked",
                   id: "wqdqwdqwd",

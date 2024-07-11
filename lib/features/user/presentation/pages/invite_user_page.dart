@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:contacts_app/core/constant/app_routes.dart';
 import 'package:contacts_app/core/hepres/toast.dart';
 import 'package:contacts_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:contacts_app/features/user/data/datasources/local_data_source.dart';
@@ -8,6 +9,7 @@ import 'package:contacts_app/features/user/data/repositories/user_repository_imp
 import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:contacts_app/features/user/domain/usecases/create_new_user.dart';
 import 'package:contacts_app/features/user/presentation/cubits/invitenewusercubit/invite_new_user_cubit.dart';
+import 'package:contacts_app/features/user/presentation/cubits/userscubit/users_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -200,8 +202,7 @@ Widget fromSction(BuildContext context) {
                         },
                         items: [
                           DropdownMenuItem(
-                              child: Text("Administrator"),
-                              value: 'Administrator'),
+                              child: Text("Admin"), value: 'Admin'),
                           DropdownMenuItem(child: Text("User"), value: 'User'),
                         ]);
                   },
@@ -224,7 +225,7 @@ Widget fromSction(BuildContext context) {
                                       lastName: state.lastName!,
                                       email: state.email!,
                                       phoneNumber: state.phoneNumber!,
-                                      role: "User"));
+                                      role: state.userType!));
                             }
                           }
                         });
@@ -247,7 +248,7 @@ Widget fromSction(BuildContext context) {
       listener: (BuildContext context, InviteNewUserState state) {
         if (state is InviteNewUserSuccessState) {
           showToast("Success", Colors.green);
-          Navigator.pop(context);
+          Navigator.of(context).pushReplacementNamed(RoutesNames.users);
         } else if (state is InviteNewUserFailureState) {
           showToast(state.message, Colors.red);
         }
