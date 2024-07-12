@@ -1,3 +1,4 @@
+import 'package:contacts_app/core/constant/api_end_points.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:dio/dio.dart';
 
@@ -5,7 +6,7 @@ import '../../features/auth/domain/repositories/auth_repository.dart';
 
 class ApiService {
   final Dio _dio;
-  final baseUrl = "https://ms.itmd-b1.com:5123/api/";
+  final baseUrl = ApiEndPoints.apiBaseUrl;
   ApiService(this._dio);
   Future<Map<String, dynamic>> logIn(
       {required String endPoint,

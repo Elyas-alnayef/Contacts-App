@@ -1,10 +1,11 @@
+import 'package:contacts_app/core/constant/api_end_points.dart';
 import 'package:dio/dio.dart';
 
 import '../../features/company/domain/repositories/company_repository.dart';
 
 class CompanyApiService {
   final Dio dio;
-  final baseUrl = "https://ms.itmd-b1.com:5123/api/";
+  final baseUrl =ApiEndPoints.apiBaseUrl;
   CompanyApiService(this.dio);
 
   Future<Map<String, dynamic>> editCompany(

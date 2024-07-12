@@ -1,3 +1,4 @@
+import 'package:contacts_app/core/constant/api_end_points.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dio/dio.dart';
@@ -27,7 +28,7 @@ abstract class UserRemoteDtatSource {
 
 class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
   final Dio dio;
-  final baseUrl = "https://ms.itmd-b1.com:5123/api/";
+  final baseUrl = ApiEndPoints.apiBaseUrl;
   String token = SharedPrefs.getData("token");
   UserRemoteDtatSourceImpl({required this.dio});
   @override

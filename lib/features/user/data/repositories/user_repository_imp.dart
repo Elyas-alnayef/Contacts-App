@@ -7,6 +7,7 @@ import 'package:contacts_app/features/user/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
+import '../../../../core/constant/api_end_points.dart';
 import '../../domain/repositoies/user_repository.dart';
 
 class UserRepositoryImpl extends UserRepository {
@@ -21,7 +22,7 @@ class UserRepositoryImpl extends UserRepository {
       {required CreateNewUserUseCaseParams params}) async {
     try {
       var data = await userRemoteDtatSource.createNewUser(
-          endPoint: "Users", params: params);
+          endPoint: ApiEndPoints.usersEndPoint, params: params);
       return right(UserModel.fromJson(data));
     } catch (e) {
       if (e is DioException) {
@@ -35,7 +36,7 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, Map<String, dynamic>>> deleteAllUsers() async {
     try {
-      var data = await userRemoteDtatSource.deleteAllUsers(endPoint: "Users");
+      var data = await userRemoteDtatSource.deleteAllUsers(endPoint:ApiEndPoints.usersEndPoint);
       return right(data);
     } catch (e) {
       if (e is DioException) {
@@ -51,7 +52,7 @@ class UserRepositoryImpl extends UserRepository {
       {required String userId}) async {
     try {
       var data = await userRemoteDtatSource.deleteUSerById(
-          endPoint: "Users", userId: userId);
+          endPoint: ApiEndPoints.usersEndPoint, userId: userId);
       return right(data);
     } catch (e) {
       if (e is DioException) {
@@ -65,7 +66,7 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
     try {
-      var data = await userRemoteDtatSource.getAllUsers(endPoint: "Users");
+      var data = await userRemoteDtatSource.getAllUsers(endPoint: ApiEndPoints.usersEndPoint);
       List<UserEntity> users = [];
       data.forEach(
         (element) {
@@ -86,7 +87,7 @@ class UserRepositoryImpl extends UserRepository {
   Future<Either<Failure, UserEntity>> getUserInformation() async {
     try {
       var data = await userRemoteDtatSource.getCurrentUser(
-          endPoint: "Users/current-user");
+          endPoint:ApiEndPoints.usersCurrentUserEndPoint);
       UserEntity user = UserModel.fromJson(data);
       return right(user);
     } catch (e) {
@@ -103,7 +104,7 @@ class UserRepositoryImpl extends UserRepository {
       {required String userId}) async {
     try {
       var data = await userRemoteDtatSource.getUserById(
-          endPoint: "Users", userId: userId);
+          endPoint: ApiEndPoints.usersEndPoint, userId: userId);
       UserEntity user = UserModel.fromJson(data);
       return right(user);
     } catch (e) {
@@ -120,7 +121,7 @@ class UserRepositoryImpl extends UserRepository {
       {required UpdateUserInformationUseCaseParams params}) async {
     try {
       var data = await userRemoteDtatSource.updateUserInformaion(
-          userId: params.userId, endPoint: "Users", params: params);
+          userId: params.userId, endPoint: ApiEndPoints.usersEndPoint, params: params);
       UserEntity user = UserModel.fromJson(data);
       return right(user);
     } catch (e) {
