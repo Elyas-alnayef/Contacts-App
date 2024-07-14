@@ -36,7 +36,7 @@ class CompanyRepositoryImpl extends CompanyRepository {
     try {
       var data = await compayLocalDataSourceImpl.fetchtheAuthUserCompany();
       if (data==null) {
-        await companyRemoteDataSourceImpl.fetchTheAutUserCompany();
+       data= await companyRemoteDataSourceImpl.fetchTheAutUserCompany();
       }
       return right(data!);
     } catch (e) {

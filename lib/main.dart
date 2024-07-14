@@ -1,4 +1,5 @@
 import 'package:contacts_app/core/constant/app_routes.dart';
+import 'package:contacts_app/core/constant/hive_boxs.dart';
 import 'package:contacts_app/core/utils/api_company_service.dart';
 import 'package:contacts_app/core/utils/hive_service.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
@@ -30,8 +31,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   CompanyHiveServices.boxinit<CompanyEntity>(
-      CompanyEntityAdapter(), "CompanyBox");
-  UserHiveServices.boxinit<UserEntity>(UserEntityAdapter(), "usersBox");
+      CompanyEntityAdapter(), BoxesName.companyBox);
+  UserHiveServices.boxinit<UserEntity>(UserEntityAdapter(), BoxesName.usersBox);
 
   await SharedPrefs.init();
   runApp(const MyApp());

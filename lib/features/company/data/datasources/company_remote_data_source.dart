@@ -1,4 +1,5 @@
 import 'package:contacts_app/core/constant/api_end_points.dart';
+import 'package:contacts_app/core/constant/hive_boxs.dart';
 import 'package:contacts_app/core/utils/api_company_service.dart';
 import 'package:contacts_app/core/utils/hive_service.dart';
 import 'package:contacts_app/core/utils/shared_perferances_service.dart';
@@ -23,7 +24,7 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
         endPoint: ApiEndPoints.companyEndPoint,
         params: params,
         token: SharedPrefs.getData("token"));
-    CompanyHiveServices.upadateData("CompanyBox", "userCompany", data);
+    CompanyHiveServices.upadateData(BoxesName.companyBox, "userCompany", data);
     return CompanyModel.fromJson(data);
   }
 
@@ -32,7 +33,7 @@ class CompanyRemoteDataSourceImpl extends CompanyRemoteDataSource {
     var data = await apiService.getCompany(
         endPoint: ApiEndPoints.companyEndPoint,
         token: SharedPrefs.getData("token"));
-    CompanyHiveServices.saveData(data, "CompanyBox", 'userCompany');
+    CompanyHiveServices.saveData(data, BoxesName.companyBox, 'userCompany');
     return CompanyModel.fromJson(data);
   }
 }
