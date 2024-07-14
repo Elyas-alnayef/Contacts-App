@@ -14,6 +14,7 @@ import 'package:contacts_app/features/company/data/repositories/company_reposito
 import 'package:contacts_app/features/company/domain/usecases/edit_company_informayion.dart';
 import 'package:contacts_app/features/company/presentation/cubits/cubit/company_cubit.dart';
 import 'package:contacts_app/features/home/presentation/pages/home_page.dart';
+import 'package:contacts_app/features/user/domain/entities/user_entity.dart';
 import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,8 @@ void main() async {
   await Hive.initFlutter();
   CompanyHiveServices.boxinit<CompanyEntity>(
       CompanyEntityAdapter(), "CompanyBox");
+  UserHiveServices.boxinit<UserEntity>(UserEntityAdapter(), "usersBox");
+
   await SharedPrefs.init();
   runApp(const MyApp());
 }

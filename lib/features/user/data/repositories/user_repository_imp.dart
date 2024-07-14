@@ -36,7 +36,8 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, Map<String, dynamic>>> deleteAllUsers() async {
     try {
-      var data = await userRemoteDtatSource.deleteAllUsers(endPoint:ApiEndPoints.usersEndPoint);
+      var data = await userRemoteDtatSource.deleteAllUsers(
+          endPoint: ApiEndPoints.usersEndPoint);
       return right(data);
     } catch (e) {
       if (e is DioException) {
@@ -65,14 +66,22 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<Either<Failure, List<UserEntity>>> getAllUsers() async {
+    var data;
+    List<UserEntity> users = [];
+
     try {
-      var data = await userRemoteDtatSource.getAllUsers(endPoint: ApiEndPoints.usersEndPoint);
-      List<UserEntity> users = [];
-      data.forEach(
-        (element) {
-          users.add(UserModel.fromJson(element));
-        },
-      );
+      data = userLocalDataSource.getUsersList();
+      users.addAll(data);
+      if (data.isEmpty) {
+        data = await userRemoteDtatSource.getAllUsers(
+            endPoint: ApiEndPoints.usersEndPoint);
+        data.forEach(
+          (element) {
+            users.add(UserModel.fromJson(element));
+          },
+        );
+      }
+
       return right(users);
     } catch (e) {
       if (e is DioException) {
@@ -87,7 +96,7 @@ class UserRepositoryImpl extends UserRepository {
   Future<Either<Failure, UserEntity>> getUserInformation() async {
     try {
       var data = await userRemoteDtatSource.getCurrentUser(
-          endPoint:ApiEndPoints.usersCurrentUserEndPoint);
+          endPoint: ApiEndPoints.usersCurrentUserEndPoint);
       UserEntity user = UserModel.fromJson(data);
       return right(user);
     } catch (e) {
@@ -102,11 +111,17 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, UserEntity>> getUserInformationByUserId(
       {required String userId}) async {
+    var data;
+    UserEntity? user;
     try {
-      var data = await userRemoteDtatSource.getUserById(
-          endPoint: ApiEndPoints.usersEndPoint, userId: userId);
-      UserEntity user = UserModel.fromJson(data);
-      return right(user);
+      data = userLocalDataSource.getUser(userId);
+      user = data;
+      if (data == null) {
+        data = await userRemoteDtatSource.getUserById(
+            endPoint: ApiEndPoints.usersEndPoint, userId: userId);
+        user = UserModel.fromJson(data);
+      }
+      return right(user!);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailre.fromDioError(e));
@@ -121,7 +136,9 @@ class UserRepositoryImpl extends UserRepository {
       {required UpdateUserInformationUseCaseParams params}) async {
     try {
       var data = await userRemoteDtatSource.updateUserInformaion(
-          userId: params.userId, endPoint: ApiEndPoints.usersEndPoint, params: params);
+          userId: params.userId,
+          endPoint: ApiEndPoints.usersEndPoint,
+          params: params);
       UserEntity user = UserModel.fromJson(data);
       return right(user);
     } catch (e) {

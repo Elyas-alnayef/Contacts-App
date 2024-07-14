@@ -127,6 +127,8 @@ Widget usersListSection(BuildContext context) {
     listener: (context, state) {
       if (state is UsersFailureState) {
         showToast(state.message, Colors.red);
+        print(state.message);
+        
       }
     },
     builder: (context, state) {

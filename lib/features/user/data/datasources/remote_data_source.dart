@@ -3,6 +3,8 @@ import 'package:contacts_app/core/utils/shared_perferances_service.dart';
 import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dio/dio.dart';
 
+import '../../../../core/utils/hive_service.dart';
+
 abstract class UserRemoteDtatSource {
   Future<List<dynamic>> getAllUsers({required String endPoint});
 
@@ -52,10 +54,12 @@ class UserRemoteDtatSourceImpl extends UserRemoteDtatSource {
 
   @override
   Future<List<dynamic>> getAllUsers({required String endPoint}) async {
+
     var respose = await dio.get("$baseUrl$endPoint",
         options: Options(headers: {
           "Authorization": "Bearer $token",
         }));
+    UserHiveServices.saveData(respose.data, "usersBox");
     return respose.data;
   }
 
