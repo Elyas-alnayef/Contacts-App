@@ -1,6 +1,13 @@
 import 'package:bloc/bloc.dart';
+import 'package:contacts_app/core/constant/api_end_points.dart';
 import 'package:contacts_app/core/constant/app_routes.dart';
+import 'package:contacts_app/core/utils/shared_perferances_service.dart';
+import 'package:contacts_app/features/user/data/datasources/remote_data_source.dart';
+import 'package:contacts_app/features/user/domain/entities/user_entity.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import '../../../../../core/functions/token_decoder.dart';
+import '../../../../user/data/repositories/user_repository_imp.dart';
 import '../../../domain/repositories/auth_repository.dart';
 import '../../../domain/usecases/user_login.dart';
 
@@ -18,11 +25,24 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> LogIn(String email, String password) async {
     emit(LoginLoadingState());
     Duration(milliseconds: 1500);
-    var result =
-        await logInUseCase.call(LogInUseCaseParameters(email:email,password:password));
+    var result = await logInUseCase
+        .call(LogInUseCaseParameters(email: email, password: password));
     result.fold((error) {
       emit(LoginFaildState(message: error.message));
-    }, (response) {
+    }, (response) async {
+      Map<String, dynamic> decodedtoken =
+          tokenDecoder(SharedPrefs.getData("token"));
+
+      UserRemoteDtatSourceImpl userdate = UserRemoteDtatSourceImpl(dio: Dio());
+      var data = await userdate.getUserById(
+          endPoint: ApiEndPoints.usersEndPoint,
+          userId: decodedtoken["Id"].toString());
+      SharedPrefs.saveUserInfo({
+        "id": data["id"],
+        "firstName": data["firstName"],
+        "lastName": data["lastName"],
+        "email": data["email"]
+      });
       emit(LoginSuccessState(response: response));
     });
   }

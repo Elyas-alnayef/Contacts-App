@@ -28,13 +28,16 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               return [
                 PopupMenuItem(
                     child: ListTile(
-                  title: Text("Ricardo johnes",
+                  title: Text(
+                      SharedPrefs.getData("firstName").toString() +
+                          " " +
+                          SharedPrefs.getData("lastName").toString(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                       )),
                   subtitle: Text(
-                    "ricardojohnes@gmail.com",
+                    SharedPrefs.getData("email").toString(),
                     style: TextStyle(
                         fontSize: 14, color: Color.fromRGBO(0, 0, 0, 0.6)),
                   ),

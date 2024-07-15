@@ -19,7 +19,7 @@ class ApiService {
             'Content-Type': 'application/json',
           },
         ));
-    await SharedPrefs.saveData(response.data);
+    await SharedPrefs.saveToken(response.data);
     return response.data;
   }
 
