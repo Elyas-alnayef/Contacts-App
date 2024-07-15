@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/constant/api_end_points.dart';
+import '../../../../core/functions/internet_listener.dart';
 import '../../domain/repositoies/user_repository.dart';
 
 class UserRepositoryImpl extends UserRepository {
@@ -70,9 +71,8 @@ class UserRepositoryImpl extends UserRepository {
     List<UserEntity> users = [];
 
     try {
-      data = userLocalDataSource.getUsersList();
-      users.addAll(data);
-      if (data.isEmpty) {
+      bool isConnected =await  checkNetworkConnection();
+      if (isConnected == true) {
         data = await userRemoteDtatSource.getAllUsers(
             endPoint: ApiEndPoints.usersEndPoint);
         data.forEach(
@@ -80,6 +80,9 @@ class UserRepositoryImpl extends UserRepository {
             users.add(UserModel.fromJson(element));
           },
         );
+      } else if (isConnected == false) {
+        data = userLocalDataSource.getUsersList();
+        users.addAll(data);
       }
 
       return right(users);

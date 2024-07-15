@@ -99,7 +99,7 @@ class UsersPage extends StatelessWidget {
                       child: UsersFeatureButton(
                         func: () {
                           Navigator.of(context)
-                              .pushNamed(RoutesNames.inviteNewUser);
+                              .popAndPushNamed(RoutesNames.inviteNewUser);
                         },
                         buttonColor: Color.fromRGBO(78, 115, 223, 1),
                         buttonName: "Invite New User",
@@ -128,7 +128,6 @@ Widget usersListSection(BuildContext context) {
       if (state is UsersFailureState) {
         showToast(state.message, Colors.red);
         print(state.message);
-        
       }
     },
     builder: (context, state) {
