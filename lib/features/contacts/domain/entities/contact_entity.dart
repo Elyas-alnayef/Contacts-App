@@ -1,4 +1,5 @@
 class ContactEntity {
+  final String id;
   final String firstName;
   final String lataName;
   final String email1;
@@ -9,8 +10,9 @@ class ContactEntity {
   final String phoneNumber2;
   final String imageUrl;
   final String isActive;
+  final String isFavorite;
 
-  ContactEntity(
+  ContactEntity(this.isFavorite, this.id, 
       {required this.firstName,
       required this.lataName,
       required this.email1,
