@@ -38,7 +38,7 @@ class CompanyRepositoryImpl extends CompanyRepository {
       if (data==null) {
        data= await companyRemoteDataSourceImpl.fetchTheAutUserCompany();
       }
-      return right(data!);
+      return right(data);
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailre.fromDioError(e));

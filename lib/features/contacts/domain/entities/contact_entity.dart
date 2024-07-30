@@ -1,7 +1,7 @@
 class ContactEntity {
-  final String id;
+  final int id;
   final String firstName;
-  final String lataName;
+  final String lastName;
   final String email1;
   final String email2;
   final String address1;
@@ -10,11 +10,13 @@ class ContactEntity {
   final String phoneNumber2;
   final String imageUrl;
   final String isActive;
-  final String isFavorite;
+  late final bool isFavorite;
 
-  ContactEntity(this.isFavorite, this.id, 
-      {required this.firstName,
-      required this.lataName,
+  ContactEntity(
+      {required this.isFavorite,
+      required this.id,
+      required this.firstName,
+      required this.lastName,
       required this.email1,
       required this.email2,
       required this.address1,

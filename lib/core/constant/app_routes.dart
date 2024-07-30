@@ -3,7 +3,7 @@ import 'package:contacts_app/features/contacts/presentation/pages/contacts_home_
 import 'package:contacts_app/features/contacts/presentation/pages/craete_new_contact_page.dart';
 import 'package:contacts_app/features/contacts/presentation/pages/export_to_pdf_page.dart';
 import 'package:contacts_app/features/user/presentation/pages/invite_user_page.dart';
-import 'package:contacts_app/features/user/presentation/pages/send_email_page.dart';
+import 'package:contacts_app/features/contacts/presentation/pages/send_email_page.dart';
 import 'package:contacts_app/features/user/presentation/pages/user_information_page.dart';
 import 'package:contacts_app/features/user/presentation/pages/users_page.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +44,5 @@ Map<String, Widget Function(BuildContext)> routes = {
   RoutesNames.createNewContact: (context) => CreateNewContactPage(),
   RoutesNames.exportToPDF: (context) => ExportToPDFPage(),
   RoutesNames.sendEmail: (context) => SendEmailPage(),
-  RoutesNames.contactProfile: (context) => ContactProfilePage(),
   RoutesNames.inviteNewUser: (context) => InviteNewUserPage(),
 };

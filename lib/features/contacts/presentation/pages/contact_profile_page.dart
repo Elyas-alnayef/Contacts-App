@@ -4,7 +4,8 @@ import '../../../../core/widgets/appbar.dart';
 import '../../../../core/widgets/drawer.dart';
 
 class ContactProfilePage extends StatelessWidget {
-  const ContactProfilePage({super.key});
+  final int contactId;
+  const ContactProfilePage({required this.contactId, super.key});
 
   @override
   Widget build(BuildContext context) {

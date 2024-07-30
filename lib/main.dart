@@ -14,9 +14,10 @@ import 'package:contacts_app/features/company/data/datasources/company_remote_da
 import 'package:contacts_app/features/company/data/repositories/company_repository_imp.dart';
 import 'package:contacts_app/features/company/domain/usecases/edit_company_informayion.dart';
 import 'package:contacts_app/features/company/presentation/cubits/cubit/company_cubit.dart';
+import 'package:contacts_app/features/contacts/data/datasources/contact_remote_data_source.dart';
+import 'package:contacts_app/features/contacts/domain/repositories/contatc_repository.dart';
 import 'package:contacts_app/features/home/presentation/pages/home_page.dart';
 import 'package:contacts_app/features/user/domain/entities/user_entity.dart';
-import 'package:contacts_app/features/user/domain/repositoies/user_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,8 +34,15 @@ void main() async {
   CompanyHiveServices.boxinit<CompanyEntity>(
       CompanyEntityAdapter(), BoxesName.companyBox);
   UserHiveServices.boxinit<UserEntity>(UserEntityAdapter(), BoxesName.usersBox);
-
   await SharedPrefs.init();
+  ContactRemoteDataSourceImpl x = ContactRemoteDataSourceImpl(dio: Dio());
+  x.sendEmail(
+      params: SendContactEmailUseCaseParams(
+          to: "ewew@gmail.com",
+          cc: "",
+          bcc: "",
+          subject: "test",
+          body: "test"));
   runApp(const MyApp());
 }
 
@@ -162,3 +170,19 @@ class MyApp extends StatelessWidget {
 
 
 
+//contact
+// ContactRemoteDataSourceImpl c = ContactRemoteDataSourceImpl(dio: Dio());
+//   try {
+//     var x = await c.sendEmail(
+//         params: SendContactEmailUseCaseParams(
+//             to: "elyasalnayef@gmail.com",
+//             cc: "smnn736@gmail.com",
+//             bcc: "smnn736@gmail.com",
+//             subject: "test",
+//             body: "test test"));
+//     print(x.toString() + "cccccccccccccccccccccccccccccccccc");
+//   } catch (e) {
+//     print(e);
+//   }
+
+//   c.getContacts();
